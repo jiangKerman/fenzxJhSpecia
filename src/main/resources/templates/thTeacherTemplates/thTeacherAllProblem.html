@@ -1,0 +1,112 @@
+<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-bordered table-hover">
+<!--        <p>每页展示-->
+<!--            <select id="selectSize">-->
+<!--                <option selected>10</option>-->
+<!--                <option value="20">20</option>-->
+<!--                <option value="30">30</option>-->
+<!--                <option value="50">50</option>-->
+<!--                <option value="3">3</option>-->
+<!--            </select>-->
+<!--            条数据-->
+<!--        </p>-->
+        <thead>
+        <tr>
+            <th scope="col">问题编号</th>
+            <th scope="col">提问日期</th>
+            <th scope="col">title</th>
+            <th scope="col">提问人姓名</th>
+            <th scope="col">提问类型</th>
+            <th scope="col">操作</th>
+            <th scope="col">解决状态</th>
+        </tr>
+        </thead>
+        <div >
+            <tbody th:each="problem:${problemDetails}">
+            <tr>
+                <th scope="row" th:text="${problem[0]}">pid</th>
+                <td th:text="${problem[6]}">2020年1月2日</td>
+                <td th:text="${problem[7]}">title</td>
+                <td th:text="${problem[10]}">蒋行</td>
+                <td th:text="${problem[3]  }">面试</td>
+                <td class=""><a class=" btn-outline-blue btn pt-1 pb-1"
+                                onclick="viewDetail(this)" th:attr="pid=${problem[0]}">查看详情</a>
+                </td>
+                <td th:text="${problem[4]}">❌未解决</td>
+            </tr>
+            </tbody>
+        </div>
+    </table>
+<!--    <nav aria-label="Page navigation example" th:object="${problemPage}">-->
+<!--        <ul class="pagination pg-blue">-->
+<!--            <li class="page-item ">-->
+<!--                <a class="page-link " th:class="*{number}+1==1?'page-link disabled':'page-link '" tabindex="-1"-->
+<!--                   onclick="selectPageAndSubmit(this)"-->
+<!--                   th:attr="currentPage=*{number}+1">Previous</a>-->
+<!--            </li>-->
+
+<!--            <li th:class="*{number}+1==${i}? 'page-item active' :'page-item'"-->
+<!--                class="page-item" th:each="i:*{#numbers.sequence(1,TotalPages)}">-->
+<!--                <a class="page-link" onclick="selectPageAndSubmit(this)" th:text="${i}">1</a>-->
+<!--            </li>-->
+
+
+<!--            <li class="page-item ">-->
+<!--                <a class="page-link" onclick="selectPageAndSubmit(this)"-->
+<!--                   th:class="*{number}+1==*{TotalPages}?'page-link disabled':'page-link '"-->
+<!--                   th:attr="currentPage=*{number}+1">Next</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+
+</div>
+
+
+<!--所有问题的参数form-->
+<form  id="problemParameterForm" action="/teacherAllProblem.html" method="post" xmlns:th="http://www.thymeleaf.org">
+    <input type="text" name="size" id="size" placeholder="size">
+    <input type="text" name="startPage" id="startPage" placeholder="startPage">
+    <input type="text" name="tid" id="tid" placeholder="tid" th:value="${session.teacher.tid}">
+</form>
+
+<!--查看问题详情的参数form-->
+<form action="/teacherViewDetail" method="post" id="viewDetailForm">
+    <input type="text" placeholder="问题编号" id="formPid" name="problemId">
+</form>
+<script>
+    function selectPageAndSubmit(obj) {
+        startPage = document.getElementById("startPage");
+        size = document.getElementById("size");
+        tid = document.getElementById("tid");
+
+        if (obj.textContent === 'Next') {
+            startPage.value = parseInt(obj.getAttribute("currentPage")) + 1;
+        } else if (obj.textContent === 'Previous') {
+            startPage.value = parseInt(obj.getAttribute("currentPage")) - 1;
+        } else {
+            (startPage.value = obj.textContent);
+        }
+
+        size.value = document.getElementById("selectSize").value;
+
+        // tid.value = '100';
+
+        document.getElementById("problemParameterForm").submit();
+    }
+
+
+    function viewDetail(obj) {
+        var pid = obj.getAttribute("pid");
+        document.getElementById("formPid").value = pid;
+        document.getElementById("viewDetailForm").submit();
+    }
+</script>
+
+
+<!--<p>page页面呢容</p>-->
+<!--<p xmlns:th="http://www.thymeleaf.org" th:text="${problemPage}"></p>-->
+
+
+<!--<br>-->
+<!--测试显示所有problem-->
+<!--<p xmlns:th="http://www.thymeleaf.org" th:text="${allProblemByTid}"></p>-->

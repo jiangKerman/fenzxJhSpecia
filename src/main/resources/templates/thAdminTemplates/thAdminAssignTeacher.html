@@ -1,0 +1,97 @@
+<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">问题编号</th>
+            <th scope="col">name</th>
+            <th scope="col">type</th>
+            <th scope="col">time</th>
+            <th scope="col">title</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <tbody th:each="problem:${unsignedProblem}">
+        <tr>
+            <th scope="row" th:text="${problem[0]}">1</th>
+            <td th:text="${problem[10]}">蒋行</td>
+            <td th:text="${problem[3]}">就业</td>
+            <td th:text="${problem[6]}">2019年12月30日</td>
+            <td th:text="${problem[7]}">2019年12月30日</td>
+            <td class="">
+                <!-- Button trigger modal -->
+                <button type="button" class=" btn-outline-blue btn pt-1 pb-1" data-toggle="modal"
+                        data-target="#basicExampleModal"
+                        th:attr="sid=${problem[5]},problemId=${problem[0]},studentName=${problem[10]},type=${problem[3]}"
+                        onclick="getProblemInfo(this)">
+                    指派老师
+                </button>
+
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div th:text="${unsignedProblem}" xmlns:th="http://www.thymeleaf.org"></div>
+
+
+<!--弹出指派教师-->
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" xmlns:th="http://www.thymeleaf.org">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content p-3">
+            <form method="post"  action="/adminSubmitAssignTeacher" id="submitAssignForm">
+                <p id="problemInfo">学生：蒋行&nbsp&nbsp类型：就业&nbsp&nbsp提问时间：2019年12月30日&nbsp&nbsp指导教师：暂无</p>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary form-check-label " th:each="teacher:${teacherList}">
+                        <input class="form-check-input" type="radio" name="options" autocomplete="off"
+                               th:value="${teacher.tid}"><span
+                            th:text="${teacher.name}"></span>
+                    </label>
+                    <!--                <label class="btn btn-primary form-check-label">-->
+                    <!--                    <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off"> 王家伟-->
+                    <!--                </label>-->
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="signTeacher(this)"
+                            id="submitChangeBtn">确定
+                    </button>
+                </div>
+
+                <input id="modelPid" name="modelPid">
+                <input id="modelTid" name="modelTid">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getProblemInfo(btn) {
+        problemInfo = document.getElementById("problemInfo");
+        problemInfo.innerText = "学生：" + btn.getAttribute("studentName") + "  类型：" + btn.getAttribute("type") + "  指定老师";
+        document.getElementById("submitChangeBtn").setAttribute("problemId", btn.getAttribute("problemId"));
+    }
+
+    //    获取需要修改的问题并指派老师。
+    function signTeacher(btn) {
+        pid = btn.getAttribute("problemId");
+        var tid;
+        options = document.getElementsByName("options");
+        for (var i = 0, length = options.length; i < length; i++) {
+            if (options[i].checked) {
+                tid = options[i].value;
+                break;
+            }
+        }
+        document.getElementById("modelPid").value = pid;
+        document.getElementById("modelTid").value = tid;
+        // alert("教师id:"+tid+"    问题id:"+pid);
+        document.getElementById("submitAssignForm").submit();
+    }
+</script>
+
+

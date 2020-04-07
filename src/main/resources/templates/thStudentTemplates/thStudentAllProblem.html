@@ -1,0 +1,44 @@
+<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">
+
+        <thead>
+        <tr>
+            <th scope="col">问题编号</th>
+            <th scope="col">题目</th>
+            <th scope="col">提问日期</th>
+            <th scope="col">指导老师</th>
+            <th scope="col">提问类型</th>
+            <th scope="col">解决状态</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <div>
+            <tbody th:each="problem:${problemList}">
+            <tr>
+                <td th:text="${problem[0]}">问题编号</td>
+                <td th:text="${problem[7]}">题目</td>
+                <td th:text="${problem[6]}">2020年3月21日</td>
+                <td th:text="${problem[9]}">王佳伟</td>
+                <td th:text="${problem[3]}">就业</td>
+                <td th:text="${problem[4]}">解决状态</td>
+                <td class=""><a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"
+                                th:attr="pid=${problem[0]}">查看</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </div>
+    </table>
+</div>
+
+<!--学生查看详情的参数表单-->
+<form action="/StudentViewQuestionDetail" id="viewDetailForm" method="post">
+    <input id="pid" name="pid">
+</form>
+
+<script>
+    function viewDetail(btn) {
+        document.getElementById("pid").value = btn.getAttribute("pid");
+        document.getElementById("viewDetailForm").submit();
+    }
+</script>

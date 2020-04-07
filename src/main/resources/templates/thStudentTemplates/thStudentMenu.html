@@ -1,0 +1,30 @@
+
+<!--        左侧功能栏，显示可进行的操作-->
+<div class="col-3 text-center border p-0 " th:fragment="teacherMenu" xmlns:th="http://www.thymeleaf.org">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585126549535&di=1168552b9e6148f8c0f256840f4bbc8f&imgtype=0&src=http%3A%2F%2Fimg.tukexw.com%2Fimg%2F08f06c37e86a2d60.jpg"
+         class="img-fluid" alt="Responsive image">
+    <div th:text="${session.student.name}">学生姓名</div>
+    <br>
+    <span th:text="${session.student.tel}">13333333333</span>
+    <p>I am a student！</p>
+
+    <table class="table table-hover table-bordered">
+
+        <tbody>
+        <tr>
+            <td>个人信息设置</td>
+        </tr>
+        <tr>
+            <td><a href="/studentPutQuesionts">发起提问</a></td>
+        </tr>
+<!--        <tr>-->
+<!--            &lt;!&ndash;                    <th scope="row">3</th>&ndash;&gt;-->
+<!--            <td colspan="2"><a href="teacherExportData.html">数据导出</a></td>-->
+<!--        </tr>-->
+        <tr>
+            <td><a href="/StudentViewQuestions">我的问题</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

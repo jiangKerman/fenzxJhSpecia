@@ -1,0 +1,23 @@
+1、teacher和admin的登陆。同一个登陆窗口，用forward根据用户名判断teacher和admin跳转到各自的页面。teacher管理页面为teacher.html,admin管理页面为admin.html。
+2、admin的方法
+    管理员查看问题
+        findAllProblem，用于查看所有学生提出的问题，返回值是List<problem>
+
+        findAllUnallocatedProblem，用于查看所有未分配的问题,返回值是List<problem>
+        findAllUnresolvedProblem,查看已分配未解决的问题
+        findAllResolvedProblem,查看已解决的问题(工单已结束的问题)
+    管理员给问题分配老师
+        assignProblem(pid,tid),把主键为pid的问题分配给主键为tid的老师
+    管理员以老师身份登陆
+
+3、teacher的方法
+    老师查看问题
+        findAllProblem,用于查看自己名下的所有问题
+        findUnresolvedProblem,查看自己名下没有解决的问题
+        findResolvedProblem,查看自己名下已经解决的问题
+    老师跟发起问题的student进行chat
+        sendChat(pid,type,msg)    问题pid，老师或者学生type围绕这个问题交换的信息msg
+        **这个方法跟学生的聊天方法是一样的，只是type由teacher变成了student
+    老师确定线下时间
+        selectTime(pid,tid,time)老师tid在问题pid上确定的线下交流时间
+    老师导出各类数据

@@ -1,0 +1,76 @@
+<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
+    <div class="card grey lighten-3 chat-room">
+        <div class="text-center">
+            <span>未解决❌ </span>
+            <span>学生空闲时间;2019年12月29日</span>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Grid row -->
+            <div class="row px-lg-2 px-2 ">
+
+
+                <div class="chat-message col-12" >
+
+                    <ul class="list-unstyled chat" th:each="chat:${chats}">
+                        <li class="d-flex justify-content-between mb-4 " th:if="${chat.type=='student'}">
+                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" alt="avatar"
+                                 class="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1">
+                            <div class="chat-body white p-3 ml-2 z-depth-1">
+                                <div class="header">
+                                    <strong class="primary-font">学生1</strong>
+                                    <small class="pull-right text-muted" th:text="${chat.time}"><i class="far fa-clock"></i>
+                                        2019年12月28日
+                                    </small>
+                                </div>
+                                <hr class="w-100">
+                                <p class="mb-0" th:text="${chat.content}">我不会就业的 阿发大水范德萨发大水范德萨</p>
+                            </div>
+                        </li>
+                        <li class="d-flex justify-content-between mb-4" th:if="${chat.type=='teacher'}">
+                            <div class="chat-body white p-3 z-depth-1">
+                                <div class="header">
+                                    <strong class="primary-font" th:text="${session.teacher.name}">教师1</strong>
+                                    <small class="pull-right text-muted" th:text="${chat.time}"><i class="far fa-clock"></i> 13 mins
+                                        ago
+                                    </small>
+                                </div>
+                                <hr class="w-100">
+                                <p class="mb-0" th:text="${chat.content}">我也是</p>
+                            </div>
+                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="avatar"
+                                 class="avatar rounded-circle mr-0 ml-3 z-depth-1">
+                        </li>
+                    </ul>
+                    <!--                    回复框-->
+
+                    <form action="/teacherReply" method="post">
+                        <div class="white">
+                            <div class="form-group basic-textarea">
+                                        <textarea name="content"
+                                                  class="form-control pl-2 my-0" id="exampleFormControlTextarea2"
+                                                  rows="3" placeholder="Type your message here..."></textarea>
+                            </div>
+                        </div>
+                        <input name="problemId"  type="text" th:value="${problemId}">
+                        <input  name="type" value="teacher" type="text">
+                        <button type="submit"
+                                class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">
+                            Send
+                        </button>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+    </div>
+</div>
+
+
+<div th:utext="${chats}"></div>
