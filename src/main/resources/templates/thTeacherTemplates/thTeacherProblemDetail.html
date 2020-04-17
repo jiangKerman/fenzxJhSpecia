@@ -1,76 +1,181 @@
-<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
-    <div class="card grey lighten-3 chat-room">
-        <div class="text-center">
-            <span>未解决❌ </span>
-            <span>学生空闲时间;2019年12月29日</span>
-        </div>
+<!--suppress ThymeleafVariablesResolveInspection -->
 
-        <div class="card-body">
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+        <div class="card grey lighten-3 chat-room">
+            <div class="text-center">
+                <span>未解决❌ </span>
+                <span>学生空闲时间;2019年12月29日</span>
+            </div>
 
-            <!-- Grid row -->
-            <div class="row px-lg-2 px-2 ">
+            <div class="card-body">
+
+                <!-- Grid row -->
+                <div class="row px-lg-2 px-2 ">
 
 
-                <div class="chat-message col-12" >
+                    <div class="chat-message col-12">
 
-                    <ul class="list-unstyled chat" th:each="chat:${chats}">
-                        <li class="d-flex justify-content-between mb-4 " th:if="${chat.type=='student'}">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" alt="avatar"
-                                 class="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1">
-                            <div class="chat-body white p-3 ml-2 z-depth-1">
-                                <div class="header">
-                                    <strong class="primary-font">学生1</strong>
-                                    <small class="pull-right text-muted" th:text="${chat.time}"><i class="far fa-clock"></i>
-                                        2019年12月28日
-                                    </small>
-                                </div>
-                                <hr class="w-100">
-                                <p class="mb-0" th:text="${chat.content}">我不会就业的 阿发大水范德萨发大水范德萨</p>
-                            </div>
-                        </li>
-                        <li class="d-flex justify-content-between mb-4" th:if="${chat.type=='teacher'}">
-                            <div class="chat-body white p-3 z-depth-1">
-                                <div class="header">
-                                    <strong class="primary-font" th:text="${session.teacher.name}">教师1</strong>
-                                    <small class="pull-right text-muted" th:text="${chat.time}"><i class="far fa-clock"></i> 13 mins
-                                        ago
-                                    </small>
-                                </div>
-                                <hr class="w-100">
-                                <p class="mb-0" th:text="${chat.content}">我也是</p>
-                            </div>
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="avatar"
-                                 class="avatar rounded-circle mr-0 ml-3 z-depth-1">
-                        </li>
-                    </ul>
-                    <!--                    回复框-->
-
-                    <form action="/teacherReply" method="post">
-                        <div class="white">
-                            <div class="form-group basic-textarea">
-                                        <textarea name="content"
-                                                  class="form-control pl-2 my-0" id="exampleFormControlTextarea2"
-                                                  rows="3" placeholder="Type your message here..."></textarea>
-                            </div>
+                        <div id="chatMessage">
+                            <ul class="list-unstyled chat" th:each="chat:${chats}">
+                                <li class="d-flex justify-content-between mb-4 " th:if="${chat.type=='student'}">
+                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" alt="avatar"
+                                         class="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1" style="height: min-content">
+                                    <div class="chat-body white p-3 ml-2 z-depth-1">
+                                        <div class="header">
+                                            <strong class="primary-font">学生1</strong>
+                                            <small class="pull-right text-muted" th:text="${chat.time}"><i
+                                                    class="far fa-clock"></i>
+                                                2019年12月28日
+                                            </small>
+                                        </div>
+                                        <hr class="w-100">
+                                        <p class="mb-0" th:text="${chat.content}">我不会就业的 阿发大水范德萨发大水范德萨</p>
+                                    </div>
+                                </li>
+                                <li class="d-flex justify-content-between mb-4" th:if="${chat.type=='teacher'}">
+                                    <div class="chat-body white p-3 z-depth-1">
+                                        <div class="header">
+                                            <strong class="primary-font" th:text="${session.teacher.name}">教师1</strong>
+                                            <small class="pull-right text-muted" th:text="${chat.time}"><i
+                                                    class="far fa-clock"></i> 13 mins
+                                                ago
+                                            </small>
+                                        </div>
+                                        <hr class="w-100">
+                                        <p class="mb-0" th:text="${chat.content}">我也是</p>
+                                    </div>
+                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="avatar"
+                                         class="avatar rounded-circle mr-0 ml-3 z-depth-1" style="height: min-content">
+                                </li>
+                            </ul>
                         </div>
-                        <input name="problemId"  type="text" th:value="${problemId}">
-                        <input  name="type" value="teacher" type="text">
-                        <button type="submit"
-                                class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">
-                            Send
-                        </button>
-                    </form>
+                        <!--                    回复框-->
+
+                        <form action="/teacherReply" method="post">
+                            <div class="white">
+                                <div class="form-group basic-textarea">
+                                        <textarea name="content" id="content"
+                                                  class="form-control pl-2 my-0"
+                                                  rows="3" placeholder="Type your message here..."></textarea>
+                                </div>
+                            </div>
+                            <input style="display: none" name="pid" id="pid" type="text" th:value="${problemId}">
+                            <input style="display: none" name="type" id="type" value="teacher" type="text">
+                            <button type="button" onclick="ajaxFunction()"
+                                    class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">
+                                Send
+                            </button>
+                        </form>
+
+
+                    </div>
 
 
                 </div>
-
+                <!-- Grid row -->
 
             </div>
-            <!-- Grid row -->
-
         </div>
+
     </div>
 </div>
 
+<!--<div id="chat"></div>-->
 
-<div th:utext="${chats}"></div>
+<script th:inline="javascript" type="text/javascript">
+    var ws = new WebSocket("ws://" + window.location.host + "/myHandler");
+
+    // var ws = new WebSocket("ws://localhost:8080/myHandler");
+
+    function ajaxFunction() {
+        var xmlhttp = new XMLHttpRequest();
+        var content = document.getElementById("content").value;
+        var pid = document.getElementById("pid").value;
+        var type = document.getElementById("type").value;
+        xmlhttp.open("post", "studentReply?pid=" + pid + "&type=" + type + "&content=" + content, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function (ev) {
+            if (xmlhttp.readyState === 4) {
+                // document.getElementById("chat").innerText = xmlhttp.responseText;
+                var chat = JSON.parse(xmlhttp.responseText + "");
+                var appendHtml = "" +
+                    "   <ul class=\"list-unstyled chat\" style='display: none;' id='appendHtml'>" +
+                    "                           <li class=\"d-flex justify-content-between mb-4\" >\n" +
+                    "                                <div class=\"chat-body white p-3 z-depth-1\">\n" +
+                    "                                    <div class=\"header\">\n" +
+                    "                                        <strong class=\"primary-font\" >我</strong>\n" +
+                    "                                        <small class=\"pull-right text-muted\" ><i\n" +
+                    "                                                class=\"far fa-clock\"></i> " +
+                    chat.time +
+                    "                                            ago\n" +
+                    "                                        </small>\n" +
+                    "                                    </div>\n" +
+                    "                                    <hr class=\"w-100\">\n" +
+                    "                                    <p class=\"mb-0\" >" +
+                    chat.content +
+                    "</p>\n" +
+                    "                                </div>\n" +
+                    "                                <img src=\"https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg\" alt=\"avatar\"\n" +
+                    "                                     class=\"avatar rounded-circle mr-0 ml-3 z-depth-1\" style=\"height: min-content\">\n" +
+                    "                            </li>\n" +
+                    "                        </ul>";
+                $("#chatMessage").append(appendHtml);
+                $("#appendHtml").slideDown().removeAttr("id");
+                $("#content").val("");
+
+
+                //处理完消息后连接websocket
+                chat.targetId = [[${student.sid}]];
+                chat.userId = [[${session.teacher.tid}]];
+                chat.pid=[[${problemId}]];
+
+                ws.send(JSON.stringify(chat));
+                //接受服务器消息触发
+
+            }
+        };
+    }
+
+    ws.onmessage = function (evt) {
+        var chat = JSON.parse(evt.data + "");
+        var appendHtml =
+            "<ul class=\"list-unstyled chat\" id='appendHtml' style='display:none'>" +
+            "   <li class=\"d-flex justify-content-between mb-4 \" >\n" +
+            "                            <img src=\"https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg\" alt=\"avatar\"\n" +
+            "                                 class=\"avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1\" style=\"height: min-content\">\n" +
+            "                            <div class=\"chat-body white p-3 ml-2 z-depth-1\">\n" +
+            "                                <div class=\"header\">\n" +
+            "                                    <strong class=\"primary-font\">我</strong>\n" +
+            "                                    <small class=\"pull-right text-muted\" ><i\n" +
+            "                                            class=\"far fa-clock\"></i>\n" +
+            chat.time +
+            "                                    </small>\n" +
+            "                                </div>\n" +
+            "                                <hr class=\"w-100\">\n" +
+            "                                <p class=\"mb-0\" >" +
+            chat.content +
+            "</p>\n" +
+            "                            </div>\n" +
+            "   </li>" +
+            "</ul>";
+        $("#chatMessage").append(appendHtml);
+        $("#appendHtml").slideDown().removeAttr("id");
+
+
+        console.log(evt.data)
+    };
+
+
+    //进入详情页面就要连接websocket
+    ws.onopen = function (ev) {
+        var chat = new Object();
+        chat.targetId = [[${student.sid}]];
+        chat.userId = [[${session.teacher.tid}]];
+        chat.pid=[[${problemId}]];
+
+        ws.send(JSON.stringify(chat));
+    };
+</script>
+<!--ajax提交信息并返回结束-->
+

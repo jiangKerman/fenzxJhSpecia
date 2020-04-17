@@ -55,29 +55,6 @@ public class ControllerTest {
         output.flush();
 
 
-//                // 以byte流的方式打开文件 文件
-//        FileInputStream hFile = new FileInputStream("工作日志.txt");
-//        // 获得到文件
-//        File file = new File("工作日志.txt".trim());
-//        // 设置响应流为下载  并加上返回文件的名称 增加utf-8设置防止乱码
-//        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(file.getName(), "UTF-8"));
-//        // 获取文件有多大
-//        int i = hFile.available();
-//        // 生成对应大小字节
-//        byte data[] = new byte[i];
-//        //读数据
-//        hFile.read(data);
-//        //得到向客户端输出二进制数据的对象
-//        OutputStream toClient = response.getOutputStream();
-//        //输出读出的数据
-//        toClient.write(data);
-//        // 刷新流
-//        toClient.flush();
-//        // 关闭流
-//        toClient.close();
-//        // 关闭流
-//        hFile.close();
-//        // 返回输出流
         return output;
     }
 

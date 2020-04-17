@@ -27,6 +27,8 @@ public class ProblemService {
         List<Problem> problemList = problemRepo.findAllByTid(tid);
         return problemList;
     }
+
+
     public Page<Problem> findALlProblemByTidSortByProblemId(String tid, Integer startPage, Integer size) {
         PageRequest pageRequest = PageRequest.of(startPage - 1, size, new Sort(Sort.Direction.DESC, "id"));
         Page<Problem> problemPage = problemRepo.findAllByTid(tid, pageRequest);
@@ -38,9 +40,13 @@ public class ProblemService {
        return problemRepo.findAllProblemDetail();
     }
 
+    public List<Object> findAllProblemDetailByResolved(String resolved){
+       return problemRepo.findAllProblemDetailByResolved(resolved);
+    }
+
 //    student  problem连接查找未分配指导老师的问题
-    public List<Object> findUnsignedProblem(Integer resolved){
-       return problemRepo.findUnsignedProblem(resolved);
+    public List<Object> findUnsignedProblemDetail(Integer resolved){
+       return problemRepo.findUnsignedProblemDetail(resolved);
     }
 
     public List<Object> findProblemDetailsByTid(String tid){

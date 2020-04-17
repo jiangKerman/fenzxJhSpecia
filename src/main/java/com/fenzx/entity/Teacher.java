@@ -18,5 +18,6 @@ public class Teacher {
     private String tel;
     private String passwd;
     private String email;
-    private String expertise;//专长：擅长的问题类型
+    //专长：擅长的问题类型  职业规划 企业生态 就业咨询 国家政策 行业动态 面试技巧 其他
+    private String expertise;
 }

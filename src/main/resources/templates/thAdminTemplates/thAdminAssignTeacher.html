@@ -1,39 +1,91 @@
-<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th scope="col">问题编号</th>
-            <th scope="col">name</th>
-            <th scope="col">type</th>
-            <th scope="col">time</th>
-            <th scope="col">title</th>
-            <th scope="col">操作</th>
-        </tr>
-        </thead>
-        <tbody th:each="problem:${unsignedProblem}">
-        <tr>
-            <th scope="row" th:text="${problem[0]}">1</th>
-            <td th:text="${problem[10]}">蒋行</td>
-            <td th:text="${problem[3]}">就业</td>
-            <td th:text="${problem[6]}">2019年12月30日</td>
-            <td th:text="${problem[7]}">2019年12月30日</td>
-            <td class="">
-                <!-- Button trigger modal -->
-                <button type="button" class=" btn-outline-blue btn pt-1 pb-1" data-toggle="modal"
-                        data-target="#basicExampleModal"
-                        th:attr="sid=${problem[5]},problemId=${problem[0]},studentName=${problem[10]},type=${problem[3]}"
-                        onclick="getProblemInfo(this)">
-                    指派老师
-                </button>
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+        <a href="/autoAssign" title="tips:该功能会自动分配所有的待分配问题" class="btn btn-outline-primary waves-effect">
+            自动分配
+        </a><span class="yellow">tips:该功能会自动分配<span class="primary-color">所有</span>的待分配问题</span>
 
-            </td>
-        </tr>
 
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">问题编号</th>
+                <th scope="col">name</th>
+                <th scope="col">type</th>
+                <th scope="col">time</th>
+                <th scope="col">title</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody th:each="problem:${unsignedProblem}">
+            <tr>
+                <th scope="row" th:text="${problem[0]}">1</th>
+                <td th:text="${problem[10]}">蒋行</td>
+                <td th:text="${problem[3]}">就业</td>
+                <td th:text="${problem[6]}">2019年12月30日</td>
+                <td th:text="${problem[7]}">2019年12月30日</td>
+                <td class="">
+                    <!-- Button trigger modal -->
+                    <button type="button" class=" btn-outline-blue btn pt-1 pb-1" data-toggle="modal"
+                            data-target="#basicExampleModal"
+                            th:attr="sid=${problem[5]},problemId=${problem[0]},studentName=${problem[10]},type=${problem[3]}"
+                            onclick="getProblemInfo(this)">
+                        指派老师
+                    </button>
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+
+    </div>
 </div>
 
-<div th:text="${unsignedProblem}" xmlns:th="http://www.thymeleaf.org"></div>
+<!--<div class="overflow-auto p-5 rgba-grey-slight" xmlns:th="http://www.thymeleaf.org">-->
+<!--    <div class="p-0 rgba-white-strong">-->
+<!--        <a href="/autoAssign" title="tips:该功能会自动分配所有的待分配问题" class="btn btn-outline-primary waves-effect">-->
+<!--            自动分配-->
+<!--        </a><span class="yellow">tips:该功能会自动分配<span class="primary-color">所有</span>的待分配问题</span>-->
+
+
+<!--        <table class="table table-bordered table-hover">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">问题编号</th>-->
+<!--                <th scope="col">name</th>-->
+<!--                <th scope="col">type</th>-->
+<!--                <th scope="col">time</th>-->
+<!--                <th scope="col">title</th>-->
+<!--                <th scope="col">操作</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody th:each="problem:${unsignedProblem}">-->
+<!--            <tr>-->
+<!--                <th scope="row" th:text="${problem[0]}">1</th>-->
+<!--                <td th:text="${problem[10]}">蒋行</td>-->
+<!--                <td th:text="${problem[3]}">就业</td>-->
+<!--                <td th:text="${problem[6]}">2019年12月30日</td>-->
+<!--                <td th:text="${problem[7]}">2019年12月30日</td>-->
+<!--                <td class="">-->
+<!--                    &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--                    <button type="button" class=" btn-outline-blue btn pt-1 pb-1" data-toggle="modal"-->
+<!--                            data-target="#basicExampleModal"-->
+<!--                            th:attr="sid=${problem[5]},problemId=${problem[0]},studentName=${problem[10]},type=${problem[3]}"-->
+<!--                            onclick="getProblemInfo(this)">-->
+<!--                        指派老师-->
+<!--                    </button>-->
+
+<!--                </td>-->
+<!--            </tr>-->
+
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div th:text="${unsignedProblem}" xmlns:th="http://www.thymeleaf.org"></div>-->
 
 
 <!--弹出指派教师-->
@@ -42,7 +94,7 @@
      aria-hidden="true" xmlns:th="http://www.thymeleaf.org">
     <div class="modal-dialog" role="document">
         <div class="modal-content p-3">
-            <form method="post"  action="/adminSubmitAssignTeacher" id="submitAssignForm">
+            <form method="post" action="/adminSubmitAssignTeacher" id="submitAssignForm">
                 <p id="problemInfo">学生：蒋行&nbsp&nbsp类型：就业&nbsp&nbsp提问时间：2019年12月30日&nbsp&nbsp指导教师：暂无</p>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary form-check-label " th:each="teacher:${teacherList}">

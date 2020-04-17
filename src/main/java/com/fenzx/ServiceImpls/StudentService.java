@@ -22,4 +22,7 @@ public class StudentService {
     public List<Problem> findAllProblemBySid(String sid){
         return problemRepo.findAllBySid(sid);
     }
+    public Student findBySid(String sid){
+        return studentRepo.findBySid(sid);
+    }
 }

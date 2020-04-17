@@ -2,26 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="thCommon/thHead::head"></head>
 <body>
-
-<header th:replace="/thCommon/thHeader"></header>
-
-
-<div class="container-fluid">
-    <!--    下面是功能和操作内容-->
-    <div class="row">
-        <div class="col-3" th:replace="/thTeacherTemplates/thTeacherMenu">这是老师的菜单栏</div>
-        <!--        右侧展示栏，展示具体的内容,根据业务所需更换不同的模板即可-->
-        <div th:replace="thTeacherTemplates/thTeacherProblemDetail">教师查看问题详情</div>
-    </div>
+<div class="kerman-content">
+    <header th:replace="thCommon/thHeader"></header>
+    <div class="col-3" th:replace="thTeacherTemplates/thTeacherMenu">这是老师的菜单栏</div>
+    <!--        右侧展示栏，展示具体的内容,根据业务所需更换不同的模板即可-->
+    <div th:replace="thTeacherTemplates/thTeacherProblemDetail">教师查看问题详情</div>
 </div>
-
-
-
-
-
-<!-- End your project here-->
-
-<script th:replace="/thCommon/thJavascriptLink"></script>
-
+<footer th:replace="thCommon/thFooter"></footer><!-- End your project here-->
+<script th:replace="thCommon/thJavascriptLink"></script>
 </body>
 </html>

@@ -1,77 +1,103 @@
-<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
-    <table class="table table-bordered table-hover">
-<!--        <p>每页展示-->
-<!--            <select id="selectSize">-->
-<!--                <option selected>10</option>-->
-<!--                <option value="20">20</option>-->
-<!--                <option value="30">30</option>-->
-<!--                <option value="50">50</option>-->
-<!--                <option value="3">3</option>-->
-<!--            </select>-->
-<!--            条数据-->
-<!--        </p>-->
-        <thead>
-        <tr>
-            <th scope="col">问题编号</th>
-            <th scope="col">提问日期</th>
-            <th scope="col">title</th>
-            <th scope="col">提问人姓名</th>
-            <th scope="col">提问类型</th>
-            <th scope="col">操作</th>
-            <th scope="col">解决状态</th>
-        </tr>
-        </thead>
-        <div >
-            <tbody th:each="problem:${problemDetails}">
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+
+        <table class="table table-bordered table-hover">
+            <!--        <p>每页展示-->
+            <!--            <select id="selectSize">-->
+            <!--                <option selected>10</option>-->
+            <!--                <option value="20">20</option>-->
+            <!--                <option value="30">30</option>-->
+            <!--                <option value="50">50</option>-->
+            <!--                <option value="3">3</option>-->
+            <!--            </select>-->
+            <!--            条数据-->
+            <!--        </p>-->
+            <thead>
             <tr>
-                <th scope="row" th:text="${problem[0]}">pid</th>
-                <td th:text="${problem[6]}">2020年1月2日</td>
-                <td th:text="${problem[7]}">title</td>
-                <td th:text="${problem[10]}">蒋行</td>
-                <td th:text="${problem[3]  }">面试</td>
-                <td class=""><a class=" btn-outline-blue btn pt-1 pb-1"
-                                onclick="viewDetail(this)" th:attr="pid=${problem[0]}">查看详情</a>
-                </td>
-                <td th:text="${problem[4]}">❌未解决</td>
+                <th scope="col">问题编号</th>
+                <th scope="col">提问日期</th>
+                <th scope="col">title</th>
+                <th scope="col">提问人姓名</th>
+                <th scope="col">提问类型</th>
+                <th scope="col">操作</th>
+                <th scope="col">解决状态</th>
             </tr>
-            </tbody>
-        </div>
-    </table>
-<!--    <nav aria-label="Page navigation example" th:object="${problemPage}">-->
-<!--        <ul class="pagination pg-blue">-->
-<!--            <li class="page-item ">-->
-<!--                <a class="page-link " th:class="*{number}+1==1?'page-link disabled':'page-link '" tabindex="-1"-->
-<!--                   onclick="selectPageAndSubmit(this)"-->
-<!--                   th:attr="currentPage=*{number}+1">Previous</a>-->
-<!--            </li>-->
+            </thead>
+            <div>
+                <tbody th:each="problem:${problemDetails}">
+                <tr>
+                    <th scope="row" th:text="${problem[0]}">pid</th>
+                    <td th:text="${problem[6]}">2020年1月2日</td>
+                    <td th:text="${problem[7]}">title</td>
+                    <td th:text="${problem[10]}">蒋行</td>
+                    <td th:text="${problem[3]  }">面试</td>
+                    <td class=""><a class=" btn-outline-blue btn pt-1 pb-1"
+                                    onclick="viewDetail(this)" th:attr="pid=${problem[0]},sid=${problem[5]}">查看详情</a>
+                    </td>
+                    <td th:text="${problem[4]}">❌未解决</td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
 
-<!--            <li th:class="*{number}+1==${i}? 'page-item active' :'page-item'"-->
-<!--                class="page-item" th:each="i:*{#numbers.sequence(1,TotalPages)}">-->
-<!--                <a class="page-link" onclick="selectPageAndSubmit(this)" th:text="${i}">1</a>-->
-<!--            </li>-->
-
-
-<!--            <li class="page-item ">-->
-<!--                <a class="page-link" onclick="selectPageAndSubmit(this)"-->
-<!--                   th:class="*{number}+1==*{TotalPages}?'page-link disabled':'page-link '"-->
-<!--                   th:attr="currentPage=*{number}+1">Next</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
-
+    </div>
 </div>
+<!--<div class="col-9 p-2 overflow-auto" xmlns:th="http://www.thymeleaf.org">-->
+<!--    <table class="table table-bordered table-hover">-->
+<!--        &lt;!&ndash;        <p>每页展示&ndash;&gt;-->
+<!--        &lt;!&ndash;            <select id="selectSize">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <option selected>10</option>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <option value="20">20</option>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <option value="30">30</option>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <option value="50">50</option>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <option value="3">3</option>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </select>&ndash;&gt;-->
+<!--        &lt;!&ndash;            条数据&ndash;&gt;-->
+<!--        &lt;!&ndash;        </p>&ndash;&gt;-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">问题编号</th>-->
+<!--            <th scope="col">提问日期</th>-->
+<!--            <th scope="col">title</th>-->
+<!--            <th scope="col">提问人姓名</th>-->
+<!--            <th scope="col">提问类型</th>-->
+<!--            <th scope="col">操作</th>-->
+<!--            <th scope="col">解决状态</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <div>-->
+<!--            <tbody th:each="problem:${problemDetails}">-->
+<!--            <tr>-->
+<!--                <th scope="row" th:text="${problem[0]}">pid</th>-->
+<!--                <td th:text="${problem[6]}">2020年1月2日</td>-->
+<!--                <td th:text="${problem[7]}">title</td>-->
+<!--                <td th:text="${problem[10]}">蒋行</td>-->
+<!--                <td th:text="${problem[3]  }">面试</td>-->
+<!--                <td class=""><a class=" btn-outline-blue btn pt-1 pb-1"-->
+<!--                                onclick="viewDetail(this)" th:attr="pid=${problem[0]},sid=${problem[5]}">查看详情</a>-->
+<!--                </td>-->
+<!--                <td th:text="${problem[4]}">❌未解决</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </div>-->
+<!--    </table>-->
+<!--    -->
+
+<!--</div>-->
 
 
 <!--所有问题的参数form-->
-<form  id="problemParameterForm" action="/teacherAllProblem.html" method="post" xmlns:th="http://www.thymeleaf.org">
+<form style="display: none" id="problemParameterForm" action="/teacherAllProblem.html" method="post"
+      xmlns:th="http://www.thymeleaf.org">
     <input type="text" name="size" id="size" placeholder="size">
     <input type="text" name="startPage" id="startPage" placeholder="startPage">
     <input type="text" name="tid" id="tid" placeholder="tid" th:value="${session.teacher.tid}">
 </form>
 
 <!--查看问题详情的参数form-->
-<form action="/teacherViewDetail" method="post" id="viewDetailForm">
+<form style="display: none" action="/teacherViewDetail" method="post" id="viewDetailForm">
     <input type="text" placeholder="问题编号" id="formPid" name="problemId">
+    <input id="sid" name="sid">
 </form>
 <script>
     function selectPageAndSubmit(obj) {
@@ -97,7 +123,9 @@
 
     function viewDetail(obj) {
         var pid = obj.getAttribute("pid");
+        var sid = obj.getAttribute("sid");
         document.getElementById("formPid").value = pid;
+        document.getElementById("sid").value = sid;
         document.getElementById("viewDetailForm").submit();
     }
 </script>

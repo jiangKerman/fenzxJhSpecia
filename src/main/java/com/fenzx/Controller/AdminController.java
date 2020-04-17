@@ -38,6 +38,41 @@ public class AdminController {
     @Autowired
     ProblemService problemService;
 
+    @RequestMapping("autoAssign")
+    public String autoAssign(HttpSession session,ModelMap modelMap) {
+        List<Problem> unsignedProblem = problemService.findAllProblemByResolved(0);
+        List<Teacher> allTeacher = teacherService.findAllTeacher();
+        for (Problem problem : unsignedProblem) {
+            //每一个问题都需要一个size变量存放老师负责的最少问题数,以及对应老师的tid
+            int size = 99999;
+            String minTid = "0";
+            for (Teacher teacher : allTeacher) {
+                //1、学生问的问题类型要和老师的擅长类型匹配
+                String problemType = problem.getProblemType();
+                String teacherExpertise = teacher.getExpertise();
+                if (teacherExpertise.contains(problemType)) {
+                    //类型匹配成功，判断老师负责的问题数量
+                    //2、如果有多个擅长同一个问题的老师，则分配给负责问题最少的一个（均匀分配）
+                    String tid = teacher.getTid();//当前问题的tid
+                    int currentSize = problemService.findAllProblemByTid(tid).size();//当前老师负责的问题数量
+                    if (currentSize < size) {
+                        size = currentSize;
+                        minTid = tid;
+                    }
+                }
+
+                //3、若问题类型匹配不上，则分配给负责问题最少的一个
+            }
+            problem.setTid(minTid);
+            problem.setResolved(1);
+            problemService.saveProblem(problem);
+        }
+//要把未分配问题置为0
+        session.setAttribute("unsignedProblemsSize", problemService.findAllProblemByResolved(0).size());//理论上应该是0
+        modelMap.put("message","成功分配所有问题！");
+        return "admin";
+    }
+
     @RequestMapping("teacherList")
     public String showTeacherList(ModelMap modelMap) {
         List<Teacher> allTeacher = teacherService.findAllTeacher();
@@ -54,18 +89,19 @@ public class AdminController {
 
     //    列出待分配问题名单
     @RequestMapping("adminAssignTeacher.html")
-    public String adminAssignTeacher(ModelMap modelMap) {
+    public String adminAssignTeacher(ModelMap modelMap, HttpSession session) {
 //        这里查询出来的是tid和sid，没有关联学生老师的姓名
 //        List<Problem> unsignedProblem = adminService.findUnsignedProblem();
 //        modelMap.put("unsignedProblem", unsignedProblem);
 
-        List<Object> unsignedProblem = problemService.findUnsignedProblem(0);
+        List<Object> unsignedProblem = problemService.findUnsignedProblemDetail(0);
         modelMap.put("unsignedProblem", unsignedProblem);
 
 
         List<Teacher> teacherList = teacherService.findAllTeacher();
         modelMap.put("teacherList", teacherList);
 
+        session.setAttribute("unsignedProblemsSize", unsignedProblem.size());
         return "adminAssignTeacher";
     }
 
@@ -96,6 +132,19 @@ public class AdminController {
 //        }
 
         return "adminShowAllProblem";
+    }
+
+    @RequestMapping("adminShowResolvedProblem")
+    public String adminShowResolvedProblem(ModelMap modelMap){
+        List<Object> problemDetailListObj = problemService.findAllProblemDetailByResolved("2");
+        modelMap.put("problemDetailListObj", problemDetailListObj);
+        return "adminShowResolvedProblem";
+    }
+    @RequestMapping("adminShowResolvingProblem")
+    public String adminShowResolvingProblem(ModelMap modelMap){
+        List<Object> problemDetailListObj = problemService.findAllProblemDetailByResolved("1");
+        modelMap.put("problemDetailListObj", problemDetailListObj);
+        return "adminShowResolvingProblem";
     }
 
     @RequestMapping("adminExportAllProblem")
@@ -141,5 +190,7 @@ public class AdminController {
 
         return responseOutputStream;
     }
+
+
 
 }

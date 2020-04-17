@@ -1,44 +1,107 @@
-<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
-    <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+        <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">
 
-        <thead>
-        <tr>
-            <th scope="col">问题编号</th>
-            <th scope="col">题目</th>
-            <th scope="col">提问日期</th>
-            <th scope="col">指导老师</th>
-            <th scope="col">提问类型</th>
-            <th scope="col">解决状态</th>
-            <th scope="col">操作</th>
-        </tr>
-        </thead>
-        <div>
-            <tbody th:each="problem:${problemList}">
+            <thead>
             <tr>
-                <td th:text="${problem[0]}">问题编号</td>
-                <td th:text="${problem[7]}">题目</td>
-                <td th:text="${problem[6]}">2020年3月21日</td>
-                <td th:text="${problem[9]}">王佳伟</td>
-                <td th:text="${problem[3]}">就业</td>
-                <td th:text="${problem[4]}">解决状态</td>
-                <td class=""><a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"
-                                th:attr="pid=${problem[0]}">查看</a>
-                </td>
-
+                <th scope="col">问题编号</th>
+                <th scope="col">题目</th>
+                <th scope="col">提问日期</th>
+                <th scope="col">指导老师</th>
+                <th scope="col">提问类型</th>
+                <th scope="col">解决状态</th>
+                <th scope="col">操作</th>
             </tr>
-            </tbody>
-        </div>
-    </table>
+            </thead>
+            <div>
+                <tbody th:each="problem:${problemList}">
+                <tr>
+                    <td th:text="${problem[0]}">问题编号</td>
+                    <td th:text="${problem[7]}">题目</td>
+                    <td th:text="${problem[6]}">2020年3月21日</td>
+                    <td th:text="${problem[9]}">王佳伟</td>
+                    <td th:text="${problem[3]}">就业</td>
+                    <!--                <td th:text="${problem[4]}">解决状态</td>-->
+                    <td th:if="${problem[4]}==0" class="red">未分配</td>
+                    <td th:if="${problem[4]}==1" class="yellow">处理中</td>
+                    <td th:if="${problem[4]}==2" class="green">已解决</td>
+
+                    <td th:if="${problem[4]}==0">
+                        <a class=" btn-outline-blue btn pt-1 pb-1 disabled" onclick="viewDetail(this)"
+                           th:attr="pid=${problem[0]},tid=${problem[11]}">等待分配老师</a>
+                    </td>
+                    <td th:if="${problem[4]}==1">
+                        <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"
+                           th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>
+                    </td>
+                    <td th:if="${problem[4]}==2">
+                        <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"
+                           th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </div>
+        </table>
+
+    </div>
 </div>
+<!--<div class="col-9 p-2 overflow-auto" xmlns:th="http://www.thymeleaf.org">-->
+<!--    <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">问题编号</th>-->
+<!--            <th scope="col">题目</th>-->
+<!--            <th scope="col">提问日期</th>-->
+<!--            <th scope="col">指导老师</th>-->
+<!--            <th scope="col">提问类型</th>-->
+<!--            <th scope="col">解决状态</th>-->
+<!--            <th scope="col">操作</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <div>-->
+<!--            <tbody th:each="problem:${problemList}">-->
+<!--            <tr>-->
+<!--                <td th:text="${problem[0]}">问题编号</td>-->
+<!--                <td th:text="${problem[7]}">题目</td>-->
+<!--                <td th:text="${problem[6]}">2020年3月21日</td>-->
+<!--                <td th:text="${problem[9]}">王佳伟</td>-->
+<!--                <td th:text="${problem[3]}">就业</td>-->
+<!--                &lt;!&ndash;                <td th:text="${problem[4]}">解决状态</td>&ndash;&gt;-->
+<!--                <td th:if="${problem[4]}==0" class="red">未分配</td>-->
+<!--                <td th:if="${problem[4]}==1" class="yellow">处理中</td>-->
+<!--                <td th:if="${problem[4]}==2" class="green">已解决</td>-->
+
+<!--                <td th:if="${problem[4]}==0">-->
+<!--                    <a class=" btn-outline-blue btn pt-1 pb-1 disabled" onclick="viewDetail(this)"-->
+<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">等待分配老师</a>-->
+<!--                </td>-->
+<!--                <td th:if="${problem[4]}==1">-->
+<!--                    <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"-->
+<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>-->
+<!--                </td>-->
+<!--                <td th:if="${problem[4]}==2">-->
+<!--                    <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"-->
+<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </div>-->
+<!--    </table>-->
+<!--</div>-->
 
 <!--学生查看详情的参数表单-->
-<form action="/StudentViewQuestionDetail" id="viewDetailForm" method="post">
+<form action="/StudentViewQuestionDetail" id="viewDetailForm" method="post" style="display: none">
     <input id="pid" name="pid">
+    <input id="tid" name="tid">
 </form>
 
 <script>
     function viewDetail(btn) {
         document.getElementById("pid").value = btn.getAttribute("pid");
+        document.getElementById("tid").value = btn.getAttribute("tid");
         document.getElementById("viewDetailForm").submit();
     }
 </script>

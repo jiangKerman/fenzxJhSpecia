@@ -1,5 +1,6 @@
-<div class="col-9 p-2" xmlns:th="http://www.thymeleaf.org">
-    <table class="table table-bordered table-hover">
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+
         <p>每页展示
             <select id="selectSize">
                 <option selected>10</option>
@@ -10,35 +11,44 @@
             </select>
             条数据
         </p>
-        <thead>
-        <tr>
-            <th scope="col">pid</th>
-            <th scope="col">学生姓名</th>
-            <th scope="col">老师姓名</th>
-            <th scope="col">学生专业</th>
-            <th scope="col">问题类型</th>
-            <th scope="col">问题题目</th>
-            <th scope="col">解决状态</th>
-        </tr>
-        </thead>
-
-        <div>
-            <tbody>
-            <tr th:each="problem:${problemDetailListObj}">
-<!--                <td  th:each="col:${problem}" th:text="${col}"></td>-->
-                <td   th:text="${problem[0]}"></td>
-                <td   th:text="${problem[11]}"></td>
-                <td   th:text="${problem[7]}"></td>
-                <td   th:text="${problem[14]}"></td>
-                <td   th:text="${problem[3]}"></td>
-                <td   th:text="${problem[6]}"></td>
-                <td   th:text="${problem[4]}"></td>
-
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">pid</th>
+                <th scope="col">学生姓名</th>
+                <th scope="col">老师姓名</th>
+                <th scope="col">学生专业</th>
+                <th scope="col">问题类型</th>
+                <th scope="col">问题题目</th>
+                <th scope="col">解决状态</th>
             </tr>
-            </tbody>
-        </div>
-    </table>
+            </thead>
 
+            <div>
+                <tbody>
+                <tr th:each="problem:${problemDetailListObj}">
+                    <!--                <td  th:each="col:${problem}" th:text="${col}"></td>-->
+                    <td th:text="${problem[0]}"></td>
+                    <td th:text="${problem[11]}"></td>
+                    <td th:text="${problem[7]}"></td>
+                    <td th:text="${problem[14]}"></td>
+                    <td th:text="${problem[3]}"></td>
+                    <td th:text="${problem[6]}"></td>
+                    <!--                <td   th:text="${problem[4]}">解决状态</td>-->
+                    <td th:if="${problem[4]}==0" class="red">未分配</td>
+                    <td th:if="${problem[4]}==1" class="yellow">处理中</td>
+                    <td th:if="${problem[4]}==2" class="green">已解决</td>
 
+                </tr>
+                </tbody>
+            </div>
+        </table>
+
+    </div>
 
 </div>
+
+
+
+
+

@@ -3,13 +3,16 @@ package com.fenzx.Controller;
 import com.fenzx.ServiceImpls.ChatService;
 import com.fenzx.ServiceImpls.ProblemService;
 import com.fenzx.ServiceImpls.StudentService;
+import com.fenzx.ServiceImpls.TeacherService;
 import com.fenzx.entity.Chat;
 import com.fenzx.entity.Problem;
 import com.fenzx.entity.Student;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,20 +25,22 @@ public class StudentController {
     StudentService studentService;
     @Autowired
     ChatService chatService;
+    @Autowired
+    TeacherService teacherService;
 
-//    学生跳转到提问界面执行
+    //    学生跳转到提问界面执行
     @RequestMapping("studentPutQuesionts")
     public String studentPutQuestions() {
         return "studentPutQuestions";
     }
 
-//    学生提交问题,点击提交执行此方法
+    //    学生提交问题,点击提交执行此方法
     @RequestMapping("StudentSubmitQuestions")
     public String StudentSubmitQuestions(
-            String sid,String title,String  time,
-            String freeTime,String problemType,String detail){
+            String sid, String title, String time,
+            String freeTime, String problemType, String detail) {
 
-        Problem problem=new Problem();
+        Problem problem = new Problem();
         problem.setSid(sid);
         problem.setTitle(title);
         problem.setTime(time);
@@ -49,32 +54,41 @@ public class StudentController {
 
 
     @RequestMapping("StudentViewQuestions")
-    public String StudentViewQuestions(ModelMap modelMap,HttpSession session){
-        Student student= (Student) session.getAttribute("student");
-        String sid=student.getSid();
+    public String StudentViewQuestions(ModelMap modelMap, HttpSession session) {
+        Student student = (Student) session.getAttribute("student");
+        String sid = student.getSid();
 
 //        List<Problem> problemList = studentService.findAllProblemBySid(sid);
 //        modelMap.put("problemList",problemList);
         List<Object> problemList = problemService.findProblemDetailsBySid(sid);
-        modelMap.put("problemList",problemList);
+        modelMap.put("problemList", problemList);
         return "studentAllProblem";
     }
 
     @RequestMapping("StudentViewQuestionDetail")
-    public String StudentViewQuestionDetail(String  pid,ModelMap modelMap){
+    public String StudentViewQuestionDetail(String pid,String tid, ModelMap modelMap) {
         List<Chat> chats = chatService.findAllChatByProblemId(Integer.parseInt(pid));
-        modelMap.put("chats",chats);
-        Problem problem =problemService.findById(Integer.parseInt(pid));
-        modelMap.put("problem",problem);
+        modelMap.put("chats", chats);
+        Problem problem = problemService.findById(Integer.parseInt(pid));
+        modelMap.put("problem", problem);
+        modelMap.put("teacher",teacherService.findByTid(tid));//前端需要老师的姓名
 
-        return "studentProblemDetails";
+         return "studentProblemDetails";
     }
 
-//    学生回复消息保存后跳转到查看详情
+    //    //    学生回复消息保存后跳转到查看详情,返回页面的做法
+//    @RequestMapping("studentReply")
+//    public String studentReply(int pid,String type,String content){
+//        chatService.saveChatByPidAndType(pid,type,content);
+//        return "forward:/StudentViewQuestionDetail?param1="+pid;
+//    }
+    //    学生回复消息保存后跳转到查看详情,ajax的做法
     @RequestMapping("studentReply")
-    public String studentReply(int pid,String type,String content){
-        chatService.saveChatByPidAndType(pid,type,content);
-        return "forward:/StudentViewQuestionDetail?param1="+pid;
+    @ResponseBody
+    public String  studentReply(int pid, String type, String content) {
+        Chat chat = chatService.saveChatByPidAndType(pid, type, content);
+        Gson gson=new Gson();
+        return gson.toJson(chat);
     }
 
 }

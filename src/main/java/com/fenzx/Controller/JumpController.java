@@ -45,14 +45,14 @@ public class JumpController {
         if (admin != null) {
             session.setAttribute("admin", admin);
             List<Problem> unsignedProblems = problemService.findAllProblemByResolved(0);
-            session.setAttribute("unsignedProblemsSize",unsignedProblems.size());
+            session.setAttribute("unsignedProblemsSize", unsignedProblems.size());
 
             return "admin.html";
         }
 //        最后判断是否为学生
-        Student student=studentService.findBySidAndPasswd(tid,password);
-        if(student!=null){
-            session.setAttribute("student",student);
+        Student student = studentService.findBySidAndPasswd(tid, password);
+        if (student != null) {
+            session.setAttribute("student", student);
             return "student.html";
         }
 
@@ -60,7 +60,13 @@ public class JumpController {
         else return "login.html";
     }
 
-
+    @RequestMapping("logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("teacher");
+        session.removeAttribute("admin");
+        session.removeAttribute("student");
+        return "login";
+    }
 
     @RequestMapping("admin.html")
     public String admin() {

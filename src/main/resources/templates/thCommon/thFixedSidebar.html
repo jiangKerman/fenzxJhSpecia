@@ -1,0 +1,49 @@
+<script>
+    window.onload = function () {
+        //设置sidebar固定在左侧
+        var htmlHeight = $(document).innerHeight();
+        var sidebarHeight = $('#sidebar').innerHeight();
+        var top = 0;//值等于scrollTop()
+
+        //屏幕滚动时
+        $(window).scroll(function (e) {
+            if (top + sidebarHeight < htmlHeight) {
+                top = $(window).scrollTop();
+                $('#sidebar').css({
+                    top: top + "px"
+                });
+            } else {
+                top = $(window).scrollTop();
+                $('#sidebar').css({
+                    top: htmlHeight - sidebarHeight + "px"
+                });
+            }
+
+        });
+
+        //屏幕大小改变时
+        $(window).resize(function () {
+            htmlHeight = $(document).innerHeight();
+            sidebarHeight = $('#sidebar').innerHeight();
+            top = 0;
+            $('#sidebar').css({
+                top: top + "px"
+            });
+            console.log(top);
+        });
+
+
+        //设置footer粘贴到底部
+        var footerHeight = $("footer").height();
+        $("footer").css({
+            "margin-top": "-" + footerHeight + "px"
+        });
+
+        // 设置header粘贴到顶部
+        $(window).scroll(function (e) {
+            $('.kerman-header').css({
+                "top": $(window).scrollTop() + "px"
+            });
+        });
+    };
+</script>

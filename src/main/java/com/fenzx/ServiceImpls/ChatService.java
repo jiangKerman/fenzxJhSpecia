@@ -5,6 +5,7 @@ import com.fenzx.entity.Chat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,10 @@ public class ChatService {
         chat.setContent(content);
         chat.setProblemId(problemId);
         chat.setType(type);
-        chat.setTime(new Date().toString());
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        chat.setTime(dateFormat.format(new Date()));
         chatRepo.save(chat);
+
 
         return chat;
     }
