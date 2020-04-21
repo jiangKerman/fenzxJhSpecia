@@ -36,8 +36,8 @@ public class JumpController {
 
 //先判断是否为老师
         Teacher teacher = teacherService.findByTidAndPassword(tid, password);
-        session.setAttribute("teacher", teacher);
         if (teacher != null) {
+            session.setAttribute("teacher", teacher);
             return "teacher.html";
         }
 //再判断是否为admin
