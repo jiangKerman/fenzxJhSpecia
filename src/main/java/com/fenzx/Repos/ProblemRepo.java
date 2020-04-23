@@ -49,6 +49,9 @@ public interface ProblemRepo extends JpaRepository<Problem, Integer> {
             " from problem p,student s where p.sid=s.sid && p.tid=?1", nativeQuery = true)
     List<Object> findProblemDetailsByTid(String tid);
 
+
+
+
     // # 0 pid
     //# 1 detail
     //# 2 freeTime
