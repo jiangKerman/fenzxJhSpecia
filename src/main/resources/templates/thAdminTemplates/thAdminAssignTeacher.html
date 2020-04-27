@@ -1,8 +1,10 @@
+<!--suppress ThymeleafVariablesResolveInspection -->
+
 <div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
     <div class="p-3 rgba-white-strong border">
-        <a href="/autoAssign" title="tips:该功能会自动分配所有的待分配问题" class="btn btn-outline-primary waves-effect">
-            自动分配
-        </a><span class="yellow">tips:该功能会自动分配<span class="primary-color">所有</span>的待分配问题</span>
+        <a href="/autoAssign" data-content="该功能会自动给所有问题分配老师" class="btn btn-outline-primary waves-effect hoverPrompt">
+            自动分配 &nbsp;<i class="fas fa-exclamation"></i>
+        </a>
 
 
         <table class="table table-bordered table-hover">
@@ -37,7 +39,6 @@
 
             </tbody>
         </table>
-
 
 
     </div>

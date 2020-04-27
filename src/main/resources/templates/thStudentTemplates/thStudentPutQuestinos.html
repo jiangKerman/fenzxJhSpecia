@@ -7,11 +7,11 @@
 
 
             <input type="text" id="title" name="title" class="form-control mb-4 " placeholder="标题">
-            <input type="date" id="freeTime" name="freeTime" class="form-control mb-4 " placeholder="点选空闲时间">
+            <input type="date" id="freeTime" name="freeTime" class="form-control mb-4 hoverPrompt"  data-content="选择空闲时间以便预约线下交流" placeholder="点选空闲时间">
 
             <!-- Subject -->
             <!--    <label>问题类型</label>-->
-            <select class="browser-default custom-select mb-4 " id="problemType" name="problemType">
+            <select class="browser-default custom-select mb-4 hoverPrompt" data-content="我们会依据你的问题类型来匹配最适合的老师" id="problemType" name="problemType">
                 <option value="职业规划">职业规划</option>
                 <option value="企业生态">企业生态</option>
                 <option value="就业咨询">就业咨询</option>
@@ -34,41 +34,6 @@
         </form>
     </div>
 </div>
-<!--<div class="col-9 p-5 overflow-auto" xmlns:th="http://www.thymeleaf.org">-->
-
-<!--    <form class="text-center border border-light p-5" action="/StudentSubmitQuestions" id="submitQuestionsForm">-->
-
-<!--        <p class="h4 mb-4">发布新的问题</p>-->
-
-
-<!--        <input type="text" id="title" name="title" class="form-control mb-4 " placeholder="标题">-->
-<!--        <input type="date" id="freeTime" name="freeTime" class="form-control mb-4 " placeholder="点选空闲时间">-->
-
-<!--        &lt;!&ndash; Subject &ndash;&gt;-->
-<!--        &lt;!&ndash;    <label>问题类型</label>&ndash;&gt;-->
-<!--        <select class="browser-default custom-select mb-4 " id="problemType" name="problemType">-->
-<!--            <option value="职业规划">职业规划</option>-->
-<!--            <option value="企业生态">企业生态</option>-->
-<!--            <option value="就业咨询">就业咨询</option>-->
-<!--            <option value="国家政策">国家政策</option>-->
-<!--            <option value="行业动态">行业动态</option>-->
-<!--            <option value="面试技巧">面试技巧</option>-->
-<!--            <option value="其他">其他</option>-->
-<!--        </select>-->
-
-<!--        &lt;!&ndash; Message &ndash;&gt;-->
-<!--        <div class="form-group">-->
-<!--            <textarea class="form-control rounded-0" id="detail" name="detail" rows="6"-->
-<!--                      placeholder="在此描述问题"></textarea>-->
-<!--        </div>-->
-
-<!--        <input id="time" name="time" style="display: none">-->
-<!--        <input id="sid" name="sid" style="display: none" th:value="${session.student.sid}">-->
-<!--        &lt;!&ndash; Send button &ndash;&gt;-->
-<!--        <button class="btn btn-info btn-block" onclick="submitFunction()">Send</button>-->
-<!--    </form>-->
-<!--</div>-->
-
 <script>
     function submitFunction() {
         time = document.getElementById("time");

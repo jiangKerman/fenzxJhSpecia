@@ -26,9 +26,9 @@
                     <td th:if="${problem[4]}==1" class="yellow">处理中</td>
                     <td th:if="${problem[4]}==2" class="green">已解决</td>
 
-                    <td th:if="${problem[4]}==0">
-                        <a class=" btn-outline-blue btn pt-1 pb-1 disabled" onclick="viewDetail(this)"
-                           th:attr="pid=${problem[0]},tid=${problem[11]}">等待分配老师</a>
+                    <td th:if="${problem[4]}==0" class="hoverPrompt" data-content="暂无负责此问题的老师,请等待分配">
+                        <a class=" btn-outline-blue btn pt-1 pb-1 disabled hoverPrompt" data-content="在" onclick="viewDetail(this)"
+                           th:attr="pid=${problem[0]},tid=${problem[11]}">未分配</a>
                     </td>
                     <td th:if="${problem[4]}==1">
                         <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"

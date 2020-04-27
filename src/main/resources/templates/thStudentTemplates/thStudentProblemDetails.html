@@ -5,14 +5,15 @@
         <div class="card grey lighten-3 chat-room">
             <div class="text-left  card">
 
-                <div th:if="${problem.resolved}==0" class="red">未分配</div>
-                <div th:if="${problem.resolved}==1" class="yellow">处理中</div>
-                <div th:if="${problem.resolved}==2" class="green">已解决</div>
+                <div th:if="${problem.resolved}==0"><i class="fas fa-times red-text"></i><span>未分配</span></div>
+                <div th:if="${problem.resolved}==1"><i class="fas fa-dot-circle yellow-text"></i><span>处理中</span></div>
+                <div th:if="${problem.resolved}==2"><i class="fas fa-check green-text"></i><span>已解决</span></div>
 
-                <div th:text="'预约时间:'+${problem.freeTime}">学生空闲时间;2019年12月29日</div>
-                <div th:text="'提问日期:'+${problem.time}">学生空闲时间;2019年12月29日</div>
+                <div><i class="far fa-clock"></i><span th:text="'预约时间:'+${problem.freeTime}">学生空闲时间;2019年12月29日</span>
+                </div>
+                <div><i class="far fa-calendar-check"></i><span th:text="'提问日期:'+${problem.time}">日期</span></div>
 
-                <div th:text="'问题标题:'+${problem.title}"></div>
+                <div><i class="fas fa-question"></i><span th:text="'问题标题:'+${problem.title}"></span></div>
             </div>
 
             <div class="card-body">
@@ -28,7 +29,8 @@
                                 <!--                        student的聊天内容-->
                                 <div class="d-flex justify-content-between mb-4 " th:if="${chat.type=='student'}">
                                     <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" alt="avatar"
-                                         class="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1" style="height: min-content">
+                                         class="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
+                                         style="height: min-content">
                                     <div class="chat-body white p-3 ml-2 z-depth-1">
                                         <div class="header">
                                             <strong class="primary-font">我</strong>
@@ -72,10 +74,23 @@
                             </div>
                             <input style="display: none" name="pid" id="pid" type="text" th:value="${problem.id}">
                             <input style="display: none" name="type" id="type" value="student" type="text">
-                            <button type="button" onclick="ajaxFunction()"
-                                    class="btn btn-info btn-rounded btn-sm waves-effect waves-light float-right">
+                            <button th:if="${problem.resolved}==1" type="button" onclick="ajaxFunction()"
+                                    class="btn-lg btn btn-outline-info btn-rounded btn-sm waves-effect waves-light float-right">
                                 发送消息
                             </button>
+
+                            <button th:if="${problem.resolved}==1" type="button" onclick="studentConfirmingProblemFunction()"
+                                    class="btn-lg btn btn-outline-amber btn-rounded btn-sm waves-effect waves-light float-right hoverPrompt"
+                                    data-content="问题完结之后再确认解决。确认后不可针对该问题发布新消息（仍然可以查看，以及新开一个问题）">
+                                确认问题解决<i class="far fa-question-circle "></i>
+                            </button>
+
+                            <div class="hoverPrompt" data-content="该工单已关闭">
+                                <button type="button" th:if="${problem.resolved}==2"
+                                        class="disabled btn-lg btn btn-outline-amber btn-rounded btn-sm waves-effect waves-light float-right hoverPrompt">
+                                    工单已结束<i class="far fa-question-circle "></i>
+                                </button>
+                            </div>
                         </form>
 
 
@@ -90,11 +105,21 @@
 
     </div>
 </div>
+<!--学生确认工单结束的form-->
+<form method="post" action="/studentConfirmingProblem" xmlns:th="http://www.thymeleaf.org"
+      id="studentConfirmingProblemForm" style="display: none">
+    <input name="pid" th:value="${problem.id}">
+</form>
+<script>
+    function studentConfirmingProblemFunction() {
+        var form = document.getElementById("studentConfirmingProblemForm");
+        form.submit()
+    }
+</script>
 
 
 <!--ajax提交信息并返回-->
-
-<div id="chat">用于显示返回数据</div>
+<!--<div id="chat">用于显示返回数据</div>-->
 
 <script th:inline="javascript" type="text/javascript">
     var ws = new WebSocket("ws://" + window.location.host + "/myHandler");
@@ -140,7 +165,7 @@
                 chat.targetId = [[${teacher.tid}]];
                 chat.userId = [[${session.student.sid}]];
 
-                chat.pid=[[${problem.id}]];
+                chat.pid = [[${problem.id}]];
 
                 ws.send(JSON.stringify(chat));
                 //接受服务器消息触发
@@ -156,7 +181,7 @@
             "                           <li class=\"d-flex justify-content-between mb-4\" >\n" +
             "                                <div class=\"chat-body white p-3 z-depth-1\">\n" +
             "                                    <div class=\"header\">\n" +
-            "                                        <strong class=\"primary-font\" >"+[[${teacher.name}]]+"</strong>\n" +
+            "                                        <strong class=\"primary-font\" >" + [[${teacher.name}]] + "</strong>\n" +
             "                                        <small class=\"pull-right text-muted\" ><i\n" +
             "                                                class=\"far fa-clock\"></i> " +
             chat.time +
@@ -184,7 +209,7 @@
         chat.targetId = [[${teacher.tid}]];
         chat.userId = [[${session.student.sid}]];
 
-        chat.pid=[[${problem.id}]];
+        chat.pid = [[${problem.id}]];
 
         ws.send(JSON.stringify(chat));
     };

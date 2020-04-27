@@ -91,4 +91,13 @@ public class StudentController {
         return gson.toJson(chat);
     }
 
+    @RequestMapping("studentConfirmingProblem")
+    public String studentConfirmingProblem(String pid){
+        Problem problem = problemService.findById(Integer.parseInt(pid));
+        problem.setResolved(2);
+        problemService.saveProblem(problem);
+        System.out.println("我确认我的问题解决了");
+        return "forward:/StudentViewQuestions";
+    }
+
 }
