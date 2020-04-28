@@ -3,9 +3,17 @@
 <div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
     <div class="p-3 rgba-white-strong border">
         <div class="card grey lighten-3 chat-room">
-            <div class="text-center">
-                <span>未解决❌ </span>
-                <span>学生空闲时间;2019年12月29日</span>
+            <div class="text-left  card">
+
+                <div th:if="${problem.resolved}==0"><i class="fas fa-times red-text"></i><span>未分配</span></div>
+                <div th:if="${problem.resolved}==1"><i class="fas fa-hand-paper yellow-text"></i><span>处理中</span></div>
+                <div th:if="${problem.resolved}==2"><i class="fas fa-check green-text"></i><span>已解决</span></div>
+
+                <div><i class="far fa-clock"></i><span th:text="'预约时间:'+${problem.freeTime}">学生空闲时间;2019年12月29日</span>
+                </div>
+                <div><i class="far fa-calendar-check"></i><span th:text="'提问日期:'+${problem.time}">日期</span></div>
+
+                <div><i class="fas fa-question"></i><span th:text="'问题标题:'+${problem.title}"></span></div>
             </div>
 
             <div class="card-body">

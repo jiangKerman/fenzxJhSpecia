@@ -35,9 +35,10 @@
                     <td th:text="${problem[3]}"></td>
                     <td th:text="${problem[6]}"></td>
                     <!--                <td   th:text="${problem[4]}">解决状态</td>-->
-                    <td th:if="${problem[4]}==0" class="red">未分配</td>
-                    <td th:if="${problem[4]}==1" class="yellow">处理中</td>
-                    <td th:if="${problem[4]}==2" class="green">已解决</td>
+                    <td th:if="${problem[4]}==0" ><i class="fas fa-times red-text"></i>未分配</td>
+                    <td th:if="${problem[4]}==1" ><i class="fas fa-hand-paper yellow-text"></i>处理中</td>
+                    <td th:if="${problem[4]}==2" ><i class="fas fa-check green-text"></i>已解决</td>
+
 
                 </tr>
                 </tbody>

@@ -20,6 +20,7 @@ public class WebMvcConf extends WebMvcConfigurerAdapter {
 ////                 .excludePathPatterns("/**")// 用于排除拦截
 //
                 .excludePathPatterns("/login") // 排除127.0.0.1进入登录页
+                .excludePathPatterns("/login.html") // 排除127.0.0.1进入登录页
 ////                .excludePathPatterns("/code") // 排除登录页获取验证码接口
 ////                .excludePathPatterns("/loginVerify") // 排除验证账号密码接口
 ////                .excludePathPatterns("/outToLogin")

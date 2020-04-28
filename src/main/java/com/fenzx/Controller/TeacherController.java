@@ -69,9 +69,11 @@ public class TeacherController {
     @RequestMapping("teacherViewDetail")
     public String teacherViewDetail(Integer problemId,String sid, ModelMap modelMap) {
         List<Chat> chats = chatService.findAllChatByProblemId(problemId);
+        ;
         modelMap.put("chats", chats);
         modelMap.put("problemId", problemId);
         modelMap.put("student",studentService.findBySid(sid));
+        modelMap.put("problem",problemService.findById(problemId));
         return "teacherProblemDetail";
     }
 

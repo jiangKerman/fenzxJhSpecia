@@ -34,7 +34,12 @@
                     <td class=""><a class=" btn-outline-blue btn pt-1 pb-1"
                                     onclick="viewDetail(this)" th:attr="pid=${problem[0]},sid=${problem[5]}">查看详情</a>
                     </td>
-                    <td th:text="${problem[4]}">❌未解决</td>
+<!--                    <td th:text="${problem[4]}">❌未解决</td>-->
+                    <td th:if="${problem[4]}==0" ><i class="fas fa-times red-text"></i>未分配</td>
+                    <td th:if="${problem[4]}==1" ><i class="fas fa-hand-paper yellow-text"></i>处理中</td>
+                    <td th:if="${problem[4]}==2" ><i class="fas fa-check green-text"></i>已解决</td>
+
+
                 </tr>
                 </tbody>
             </div>
