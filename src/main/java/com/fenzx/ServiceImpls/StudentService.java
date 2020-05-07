@@ -5,7 +5,6 @@ import com.fenzx.Repos.StudentRepo;
 import com.fenzx.entity.Problem;
 import com.fenzx.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +15,7 @@ public class StudentService {
     StudentRepo studentRepo;
     @Autowired
     ProblemRepo problemRepo;
+
     public Student findBySidAndPasswd(String sid,String passwd){
         return studentRepo.findBySidAndPasswd(sid,passwd);
     }
@@ -25,4 +25,11 @@ public class StudentService {
     public Student findBySid(String sid){
         return studentRepo.findBySid(sid);
     }
+
+    public Student saveStudent(Student student){
+        studentRepo.save(student);
+        return student;
+    }
+
+
 }

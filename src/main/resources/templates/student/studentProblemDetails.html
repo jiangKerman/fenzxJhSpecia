@@ -4,9 +4,9 @@
 <body>
 <div class="kerman-content">
     <header th:replace="thCommon/thHeader"></header>
-    <div class="col-3" th:replace="thTeacherTemplates/thTeacherMenu">这是老师的菜单栏</div>
+    <div class="col-3" th:replace="student/thStudentMenu">学生菜单栏</div>
     <!--        右侧展示栏，展示具体的内容,根据业务所需更换不同的模板即可-->
-    <div th:replace="thTeacherTemplates/thTeacherAllProblem">这是所有问题</div>
+    <div th:replace="student/thStudentProblemDetails">这是所有问题</div>
 </div>
 <footer th:replace="thCommon/thFooter"></footer><!-- End your project here-->
 <script th:replace="thCommon/thJavascriptLink"></script>

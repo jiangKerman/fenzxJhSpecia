@@ -31,7 +31,7 @@ public class StudentController {
     //    学生跳转到提问界面执行
     @RequestMapping("studentPutQuesionts")
     public String studentPutQuestions() {
-        return "studentPutQuestions";
+        return "student/studentPutQuestions";
     }
 
     //    学生提交问题,点击提交执行此方法
@@ -62,7 +62,7 @@ public class StudentController {
 //        modelMap.put("problemList",problemList);
         List<Object> problemList = problemService.findProblemDetailsBySid(sid);
         modelMap.put("problemList", problemList);
-        return "studentAllProblem";
+        return "student/studentAllProblem";
     }
 
     @RequestMapping("StudentViewQuestionDetail")
@@ -73,15 +73,9 @@ public class StudentController {
         modelMap.put("problem", problem);
         modelMap.put("teacher",teacherService.findByTid(tid));//前端需要老师的姓名
 
-         return "studentProblemDetails";
+         return "student/studentProblemDetails";
     }
 
-    //    //    学生回复消息保存后跳转到查看详情,返回页面的做法
-//    @RequestMapping("studentReply")
-//    public String studentReply(int pid,String type,String content){
-//        chatService.saveChatByPidAndType(pid,type,content);
-//        return "forward:/StudentViewQuestionDetail?param1="+pid;
-//    }
     //    学生回复消息保存后跳转到查看详情,ajax的做法
     @RequestMapping("studentReply")
     @ResponseBody
@@ -98,6 +92,12 @@ public class StudentController {
         problemService.saveProblem(problem);
         System.out.println("我确认我的问题解决了");
         return "forward:/StudentViewQuestions";
+    }
+
+    @RequestMapping("recommendContent")
+    public String recommendContent(){
+
+        return "student/studentRecommendContent";
     }
 
 }

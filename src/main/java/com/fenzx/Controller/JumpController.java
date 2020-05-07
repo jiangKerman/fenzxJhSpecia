@@ -11,9 +11,7 @@ import com.fenzx.ServiceImpls.AdminService;
 import com.fenzx.ServiceImpls.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -32,13 +30,17 @@ public class JumpController {
 
     @RequestMapping("login")
     public String login(String tid, String password, HttpSession session) {
-//这里的tid可能是学号，教师号或者管理员账号
+//        如果原来由session，需要先清除
+        session.removeAttribute("teacher");
+        session.removeAttribute("admin");
+        session.removeAttribute("student");
+        //这里的tid可能是学号，教师号或者管理员账号
 
 //先判断是否为老师
         Teacher teacher = teacherService.findByTidAndPassword(tid, password);
         if (teacher != null) {
             session.setAttribute("teacher", teacher);
-            return "teacher.html";
+            return "teacher/teacher.html";
         }
 //再判断是否为admin
         Admin admin = adminService.findByUsernameAndPasswd(tid, password);
@@ -47,13 +49,13 @@ public class JumpController {
             List<Problem> unsignedProblems = problemService.findAllProblemByResolved(0);
             session.setAttribute("unsignedProblemsSize", unsignedProblems.size());
 
-            return "admin.html";
+            return "admin/admin.html";
         }
 //        最后判断是否为学生
         Student student = studentService.findBySidAndPasswd(tid, password);
         if (student != null) {
             session.setAttribute("student", student);
-            return "student.html";
+            return "student/student.html";
         }
 
 //否则用户名或密码错误
@@ -70,7 +72,7 @@ public class JumpController {
 
     @RequestMapping("admin.html")
     public String admin() {
-        return "admin";
+        return "admin/admin";
     }
 
 
@@ -81,39 +83,35 @@ public class JumpController {
 
     @RequestMapping("teacher.html")
     public String teacher() {
-        return "teacher";
+        return "teacher/teacher";
     }
 
-//    @RequestMapping("teacherAllProblem.html")
-//    public String teacherAllProblem() {
-//        return "teacherAllProblem";
-//    }
 
     @RequestMapping("student.html")
     public String student() {
-        return "student";
+        return "student/student";
     }
 
 
     @RequestMapping("teacherExportData.html")
     public String teacherExportData() {
-        return "teacherExportData";
+        return "teacher/teacherExportData";
     }
 
     @RequestMapping("teacherProblemDetail.html")
     public String teacherProblemDetail() {
-        return "teacherProblemDetail";
+        return "teacher/teacherProblemDetail";
     }
 
 
     @RequestMapping("teacherSolvedProblem.html")
     public String teacherSolvedProblem() {
-        return "teacherSolvedProblem";
+        return "teacher/teacherSolvedProblem";
     }
 
     @RequestMapping("teacherUnsolvedProblem.html")
     public String teacherUnsolvedProblem() {
-        return "teacherUnsolvedProblem";
+        return "teacher/teacherUnsolvedProblem";
     }
 
 

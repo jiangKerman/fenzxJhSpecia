@@ -1,5 +1,5 @@
 <!--        左侧功能栏，显示可进行的操作-->
-<div id="sidebar" class="col-3 text-center border p-0 float-left " th:fragment="teacherMenu"
+<div id="sidebar" class="col-3 col-lg-2 text-center border p-0 float-left " th:fragment="teacherMenu"
      xmlns:th="http://www.thymeleaf.org">
     <img width="100%" src="https://i.loli.net/2020/04/17/fqKuJicTV4SM7Gk.png"
          class="img-fluid" alt="Responsive image">
@@ -22,6 +22,9 @@
         <!--        </tr>-->
         <tr>
             <td><a href="/StudentViewQuestions">我的问题</a></td>
+        </tr>
+        <tr>
+            <td><a href="/recommendContent">向你推荐<span class="badge badge-danger ml-2" >4</span></a></td>
         </tr>
         </tbody>
     </table>

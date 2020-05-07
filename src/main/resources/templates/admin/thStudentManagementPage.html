@@ -1,0 +1,128 @@
+<!--suppress ThymeleafVariablesResolveInspection -->
+
+<div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3 rgba-white-strong border">
+        <!-- Button trigger modal -->
+        <div class="row">
+            <div class="offset-1">
+                <button type="button" class="btn btn-outline-primary waves-effect btn-sm " data-toggle="modal"
+                        data-target="#addStudentModle">
+                    新增学生
+                </button>
+                <a type="button" class="btn btn-outline-primary waves-effect btn-sm" href="import.xlsx">模板下载</a>
+            </div>
+
+            <form method="post" class="offset-1" action="/addStudentFromExcel" enctype="multipart/form-data">
+                <input type="file" class="btn btn-outline-primary waves-effect btn-sm" name="inputFile">
+                <button type="submit" class="btn btn-outline-primary waves-effect btn-sm">学生导入</button>
+            </form>
+        </div>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">学号</th>
+                <th scope="col">姓名</th>
+                <th scope="col">电话</th>
+                <th scope="col">专业</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student:${studentPage.content}">
+                <th scope="row" th:text="${student.sid}">sid</th>
+                <td th:text="${student.name}">Mark</td>
+                <td th:text="${student.tel}">Mark</td>
+                <td th:text="${student.major}">Mark</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+        <nav aria-label="Page navigation example" th:if="${studentPage.TotalPages}>1">
+            <ul class="pagination pg-blue">
+                <li class="page-item" th:classappend="${studentPage.number}+1 ==1 ? 'disabled' "
+                    onclick="setStartPageAndSubmit(this)"
+                    th:attr="sid=${studentPage.number}"
+                >
+                    <a class="page-link" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" th:each="i:${#numbers.sequence(1,studentPage.TotalPages)}"
+                    th:classappend="${studentPage.number}+1==${i} ? 'active' : '' "
+                    th:if=" ${studentPage.number}-${i}<=3 and ${studentPage.number}-${i}>= -3
+                    or ${studentPage.TotalPages}==${i} or ${i}==1"
+                    th:attr="sid=${i}"
+                    onclick="setStartPageAndSubmit(this)"
+                >
+                    <a class="page-link" th:text="${i}">1</a>
+                </li>
+
+                <li class="page-item" th:classappend="${studentPage.number}+1 ==${studentPage.TotalPages} ? 'disabled' "
+                    onclick="setStartPageAndSubmit(this)"
+                    th:attr="sid=${studentPage.number}+2">
+                    <a class="page-link">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+<!--显示学生分页查询表单-->
+<form method="post" action="/studentManagement" id="studentManagementForm" style="display: none">
+    <input name="startPage" id="startPage">
+</form>
+<script>
+    function setStartPageAndSubmit(obj) {
+        var page = obj.getAttribute("sid");
+        document.getElementById("startPage").value = page;
+        document.getElementById("studentManagementForm").submit();
+    }
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addStudentModle" tabindex="-1" role="dialog" aria-labelledby="addStudentModle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentModleLable">新增学生</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    该功能只针对特定学生，如需批量导入请使用导入功能。学生默认密码和学号一致。
+                </div>
+                <!-- Default form login -->
+                <form class="text-center border border-light p-5" action="/addstudent" method="post">
+
+                    <p class="h4 mb-4">Sign in</p>
+
+                    <!-- sid -->
+                    <input type="text" name="sid" class="form-control mb-4 hoverPrompt" data-content="学号不可留空"
+                           placeholder="学号">
+                    <!-- name -->
+                    <input type="text" name="name" class="form-control mb-4 hoverPrompt" data-content="姓名不可留空"
+                           placeholder="姓名">
+                    <input type="text" name="tel" class="form-control mb-4" placeholder="电话">
+                    <input type="text" name="gender" class="form-control mb-4" placeholder="性别">
+                    <input type="text" name="department" class="form-control mb-4" placeholder="学院">
+                    <input type="text" name="major" class="form-control mb-4" placeholder="专业">
+
+                    <button type="submit" class="btn btn-primary ">添加</button>
+
+                </form>
+                <!-- Default form login -->
+            </div>
+            <!--            <div class="modal-footer">-->
+            <!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+            <!--                <button type="button" class="btn btn-primary">添加</button>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+<!--显示总页数-->
+<!--<div th:text="${studentPage.TotalPages}"></div>-->

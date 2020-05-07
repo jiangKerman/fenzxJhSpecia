@@ -94,6 +94,14 @@
             <artifactId>poi</artifactId>
             <version>4.1.2</version>
         </dependency>
+<!--   还需要引入一个poi-ooxml     https://blog.csdn.net/xiaocai0923/article/details/89525053-->
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>

@@ -46,7 +46,7 @@ public class TeacherController {
         Page<Problem> problemPage = problemService.findALlProblemByTidSortByProblemId(tid, startPage, size);
         modelMap.put("problemPage", problemPage);
 
-        return "teacherAllProblem.html";
+        return "teacher/teacherAllProblem.html";
     }
 
     @RequestMapping("defaultTeacherAllProblem.html")
@@ -63,7 +63,7 @@ public class TeacherController {
         List<Object> problemDetails = problemService.findProblemDetailsByTid(teacher.getTid());
         modelMap.put("problemDetails", problemDetails);
 
-        return "teacherAllProblem.html";
+        return "teacher/teacherAllProblem.html";
     }
 
     @RequestMapping("teacherViewDetail")
@@ -74,7 +74,7 @@ public class TeacherController {
         modelMap.put("problemId", problemId);
         modelMap.put("student",studentService.findBySid(sid));
         modelMap.put("problem",problemService.findById(problemId));
-        return "teacherProblemDetail";
+        return "teacher/teacherProblemDetail";
     }
 
 

@@ -11,9 +11,19 @@ spring:
         dialect: com.fenzx.Config.MysqlConfig
 
   datasource:
-    url: jdbc:mysql://localhost:3306/fenzx?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    #    url: jdbc:mysql://localhost:3306/fenzx?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    #    username: fenzxAdmin
+    #    password: freeKerman
+    url: jdbc:mysql://101.200.61.6:3306/fenzx?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: fenzxAdmin
     password: freeKerman
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    https://blog.csdn.net/qq_38023253/article/details/80815618
+    #    #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
+#    dbcp2:
+#      validation-query: SELECT 1
+#      test-on-borrow: true
+#      test-on-return: true
+#      test-while-idle: true
 
 

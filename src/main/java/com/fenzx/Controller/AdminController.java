@@ -2,25 +2,30 @@ package com.fenzx.Controller;
 
 import com.fenzx.ServiceImpls.AdminService;
 import com.fenzx.ServiceImpls.ProblemService;
+import com.fenzx.ServiceImpls.StudentService;
 import com.fenzx.ServiceImpls.TeacherService;
 import com.fenzx.entity.Problem;
+import com.fenzx.entity.Student;
 import com.fenzx.entity.Teacher;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -37,9 +42,11 @@ public class AdminController {
     AdminService adminService;
     @Autowired
     ProblemService problemService;
+    @Autowired
+    StudentService studentService;
 
     @RequestMapping("autoAssign")
-    public String autoAssign(HttpSession session,ModelMap modelMap) {
+    public String autoAssign(HttpSession session, ModelMap modelMap) {
         List<Problem> unsignedProblem = problemService.findAllProblemByResolved(0);
         List<Teacher> allTeacher = teacherService.findAllTeacher();
         for (Problem problem : unsignedProblem) {
@@ -69,22 +76,22 @@ public class AdminController {
         }
 //要把未分配问题置为0
         session.setAttribute("unsignedProblemsSize", problemService.findAllProblemByResolved(0).size());//理论上应该是0
-        modelMap.put("message","成功分配所有问题！");
-        return "admin";
+        modelMap.put("message", "成功分配所有问题！");
+        return "admin/admin";
     }
 
     @RequestMapping("teacherList")
     public String showTeacherList(ModelMap modelMap) {
         List<Teacher> allTeacher = teacherService.findAllTeacher();
         modelMap.put("allTeacher", allTeacher);
-        return "adminShowTeacherList";
+        return "admin/adminShowTeacherList";
     }
 
     @RequestMapping("loginAsTeacher")
     public String loginAsTeacher(String tid, HttpSession session) {
         Teacher teacher = teacherService.findByTid(tid);
         session.setAttribute("teacher", teacher);
-        return "teacher";
+        return "teacher/teacher";
     }
 
     //    列出待分配问题名单
@@ -102,7 +109,7 @@ public class AdminController {
         modelMap.put("teacherList", teacherList);
 
         session.setAttribute("unsignedProblemsSize", unsignedProblem.size());
-        return "adminAssignTeacher";
+        return "admin/adminAssignTeacher";
     }
 
     //    给问题分配确定老师执行的方法
@@ -131,20 +138,21 @@ public class AdminController {
 //            }
 //        }
 
-        return "adminShowAllProblem";
+        return "admin/adminShowAllProblem";
     }
 
     @RequestMapping("adminShowResolvedProblem")
-    public String adminShowResolvedProblem(ModelMap modelMap){
+    public String adminShowResolvedProblem(ModelMap modelMap) {
         List<Object> problemDetailListObj = problemService.findAllProblemDetailByResolved("2");
         modelMap.put("problemDetailListObj", problemDetailListObj);
         return "adminShowResolvedProblem";
     }
+
     @RequestMapping("adminShowResolvingProblem")
-    public String adminShowResolvingProblem(ModelMap modelMap){
+    public String adminShowResolvingProblem(ModelMap modelMap) {
         List<Object> problemDetailListObj = problemService.findAllProblemDetailByResolved("1");
         modelMap.put("problemDetailListObj", problemDetailListObj);
-        return "adminShowResolvingProblem";
+        return "admin/adminShowResolvingProblem";
     }
 
     @RequestMapping("adminExportAllProblem")
@@ -191,6 +199,66 @@ public class AdminController {
         return responseOutputStream;
     }
 
+    @RequestMapping("studentManagement")
+    public String studentManagement(ModelMap modelMap, @RequestParam(required = false, defaultValue = "1") int startPage) {
+        Page<Student> studentPage = adminService.findAllStudent(startPage);
+        modelMap.put("studentPage", studentPage);
+        return "admin/studentManagementPage";
+    }
 
+    @RequestMapping("addstudent")
+    public String addStudent(String sid, String name, String tel, String gender, String department, String major) {
+        Student s = new Student();
+        s.setSid(sid);
+        s.setName(name);
+        s.setTel(tel);
+        s.setGender(gender);
+        s.setDepartment(department);
+        s.setMajor(major);
+        s.setPasswd(sid);
+        studentService.saveStudent(s);
+        return "forward:/studentManagement";
+    }
+
+    //    https://my.oschina.net/u/3677987/blog/2988429
+    @RequestMapping("addStudentFromExcel")
+    public String addStudentFromExcel(MultipartFile inputFile) throws IOException {
+        Workbook workbook = null;
+        InputStream inputStream = inputFile.getInputStream();
+        List<String[]> list = new ArrayList<String[]>();
+        workbook = WorkbookFactory.create(inputStream);
+        int numberOfSheets = workbook.getNumberOfSheets();
+//        Student student = new Student();
+
+         if (numberOfSheets > 0) {
+            Sheet sheet = workbook.getSheetAt(0);
+            int firstRowNum = sheet.getFirstRowNum();
+            int lastRowNum = sheet.getLastRowNum();
+//            第0行和第1行时title和表头
+            for (int rowNum = 2; rowNum <= lastRowNum; rowNum++) {
+                Row row = sheet.getRow(rowNum);
+
+//                Student student=new Student(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),row.getCell(0).toString());
+
+//
+//                student.setSid(row.getCell(0).toString());
+//                student.setName(row.getCell(1).toString());
+//                student.setTel(row.getCell(2).toString());
+//                student.setGender(row.getCell(3).toString());
+//                student.setDepartment(row.getCell(4).toString());
+//                student.setMajor(row.getCell(5).toString());
+////                密码和学号一样
+//                student.setPasswd(row.getCell(0).toString());
+                studentService.saveStudent(new Student(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),row.getCell(0).toString()));
+
+//                for (int i = 0; i < 6; i++) {
+//                    System.out.print(row.getCell(i));
+//                }
+                System.out.println(rowNum + "行结束");
+            }
+        }
+
+        return "forward:/studentManagement";
+    }
 
 }

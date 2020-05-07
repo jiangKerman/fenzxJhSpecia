@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="thCommon/thHead::head"></head>
+<body>
+<div class="kerman-content">
+    <header th:replace="thCommon/thHeader"></header>
+    <div class="col-3" th:replace="teacher/thTeacherMenu">这是老师的菜单栏</div>
+    <!--        右侧展示栏，展示具体的内容,根据业务所需更换不同的模板即可-->
+    <div th:replace="teacher/thTeacherUnsolvedProblem">教师查未解决的问题</div>
+</div>
+<footer th:replace="thCommon/thFooter"></footer><!-- End your project here-->
+<script th:replace="thCommon/thJavascriptLink"></script>
+</body>
+</html>
