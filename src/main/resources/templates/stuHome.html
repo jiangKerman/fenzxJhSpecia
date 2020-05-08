@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <!-- <div th:replace="indexTemplates/head"></div> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+
+<body>
+<!--导航栏-->
+<div th:replace="indexTemplates/nav"></div>
+<br>
+<div style="width: 1200px;
+            margin: 0 auto;">
+    <!--侧边导航栏-->
+    <div style="display: inline;float: left;height: 100%;">
+        <ul class="layui-nav layui-nav-tree layui-inline layui-bg-blue" lay-filter="demo" style="margin-right: 10px;">
+            <li id="navmess" class="layui-nav-item"><a>消息</a></li>
+            <li id="navprj" class="layui-nav-item"><a>项目</a></li>
+            <li id="navclec" class="layui-nav-item"><a>收藏</a></li>
+        </ul>
+    </div>
+    <div style="height: 200px;margin-left: 200px;">
+        <div id="blockmess">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">全部消息</li>
+                    <li>未读消息<span class="layui-badge" th:text="${notreadnum}">0</span></li>
+                    <li>已发送</li>
+                </ul>
+                <div class="layui-tab-content" style="height: 100px;">
+                    <div class="layui-tab-item layui-show">
+                        <!--全部消息-->
+                        <table class="layui-table" lay-skin="line" style="width: 1000px;">
+                            <colgroup>
+                                <col width="500px">
+                                <col width="200px">
+                                <col width="120px">
+                                <col width="100px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>内容</th>
+                                    <th>发送时间</th>
+                                    <th>发送者</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="allmess:${allmessage}">
+                                    <td>
+                                        <form action="messInfo" method="post">
+                                            <input type="hidden" th:value="${allmess.id}" name="messid">
+                                            <div class="messinfo"  style="white-space: nowrap; overflow: hidden;
+                                            text-overflow:ellipsis;width: 500px;" th:text="${allmess.content}">
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td th:text="${allmess.time}">2020-06-09 20:00:00</td>
+                                    <td th:text="${allmess.senderName}">ldy</td>
+                                    <td>
+                                        <form class="deletemess">
+                                            <input type="hidden" th:value="${allmess.id}" name="messid">
+                                            <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                    class="layui-icon"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--未读-->
+                        <table class="layui-table" lay-skin="line" style="width: 1100px;">
+                            <colgroup>
+                                <col width="600px">
+                                <col width="200px">
+                                <col width="120px">
+                                <col width="100px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>内容</th>
+                                    <th>发送时间</th>
+                                    <th>发送者</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="notreadmess:${notreadmessage}">
+                                    <td>
+                                        <form action="messInfo" method="post">
+                                            <input type="hidden" th:value="${notreadmess.id}" name="messid">
+                                            <div class="messinfo"  style="white-space: nowrap; overflow: hidden;
+                                            text-overflow:ellipsis;width: 500px;" th:text="${notreadmess.content}">
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td  th:text="${notreadmess.time}">2020-06-09 20:00:00</td>
+                                    <td th:text="${notreadmess.senderName}">ldy</td>
+                                    <td>
+                                        <form class="deletemess">
+                                            <input type="hidden" th:value="${notreadmess.id}" name="messid">
+                                            <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                    class="layui-icon"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--发送-->
+                        <table class="layui-table" lay-skin="line" style="width: 1100px;">
+                            <colgroup>
+                                <col width="600px">
+                                <col width="200px">
+                                <col width="120px">
+                                <col width="120px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>内容</th>
+                                <th>发送时间</th>
+                                <th>发送给</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="sendmessage:${sendmessage}">
+                                <td>
+                                    <form action="messInfosender" method="post">
+                                        <input type="hidden" th:value="${sendmessage.id}" name="messid">
+                                        <div class="messinfo"  style="white-space: nowrap; overflow: hidden;
+                                            text-overflow:ellipsis;width: 500px;" th:text="${sendmessage.content}">
+                                        </div>
+                                    </form>
+                                </td>
+                                <td  th:text="${sendmessage.time}">2020-06-09 20:00:00</td>
+                                <td th:text="${sendmessage.senderName}"></td>
+                                <td>
+                                    <form class="deletesendmess">
+                                        <input type="hidden" th:value="${sendmessage.id}" name="messid">
+                                        <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                class="layui-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="blockprj" style="display: none">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">我的项目</li>
+                </ul>
+                <div class="layui-tab-content" style="height: 100px;">
+                    <div class="layui-tab-item layui-show">
+                        <a href="publishProject.html"><button type="button" class="layui-btn"><i class="layui-icon"></i></button></a>
+                        <!--我的项目-->
+                        <table class="layui-table" lay-skin="line" style="width: 800px;">
+                            <colgroup>
+                                <col width="400px">
+                                <col width="200px">
+                                <col width="100px">
+                                <col width="100px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>项目名称</th>
+                                    <th>发布时间</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody th:each="project:${projects}">
+                                <tr>
+                                    <td><a target="_blank" th:href="@{/projectInfo(projectid=${project.id})}"
+                                            th:text="${project.pName}">就业创业咨询指导平台</a></td>
+                                    <td th:text="${project.publishTime}">2020-06-09</td>
+                                    <td>
+                                    <form class="deleteproject">
+                                        <input name="projectid" type="hidden" th:value="${project.id}">
+                                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+                                    </form>
+                                    </td>
+                                    <td>
+                                    <form action="/alterProject" method="post">
+                                        <input type="hidden" name="projectid" th:value="${project.id}">
+                                        <button type="submit" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="blockclec" style="display: none">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">招聘</li>
+                    <li>实习</li>
+                    <li>宣讲/双选会</li>
+                    <li>创业项目</li>
+                </ul>
+                <div class="layui-tab-content" style="height: 100px;">
+                    <div class="layui-tab-item layui-show">
+                        <!--招聘收藏-->
+                        <table class="layui-table" lay-skin="line" style="width: 1050px;">
+                            <colgroup>
+                                <col width="600px">
+                                <col width="200px">
+                                <col width="200px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>招聘公告</th>
+                                <th>发布时间</th>
+                                <th>取消收藏</th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="crec:${creclist}">
+                            <tr>
+                                <td><a target="_blank" th:href="@{/recInfo(recid=${crec.recid})}" th:text="${crec.title}"></a></td>
+                                <td th:text="${crec.rectime}">2020</td>
+                                <td>
+                                    <form class="deleteClctRec">
+                                        <input type="hidden" th:value="${crec.crid}" name="crid">
+                                        <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                class="layui-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <table class="layui-table" lay-skin="line" style="width: 1050px;">
+                            <colgroup>
+                                <col width="600px">
+                                <col width="200px">
+                                <col width="200px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>实习公告</th>
+                                <th>发布时间</th>
+                                <th>取消收藏</th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="cinter:${cinterlist}">
+                            <tr>
+                                <td><a target="_blank" th:href="@{/recInfo(recid=${cinter.recid})}" th:text="${cinter.title}"></a></td>
+                                <td th:text="${cinter.rectime}">2020</td>
+                                <td>
+                                    <form class="deleteClctRec">
+                                        <input type="hidden" th:value="${cinter.crid}" name="crid">
+                                        <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                class="layui-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <table class="layui-table" lay-skin="line" style="width: 1050px;">
+                            <colgroup>
+                                <col width="600px">
+                                <col width="200px">
+                                <col width="200px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>公告</th>
+                                <th>发布时间</th>
+                                <th>取消收藏</th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="cpreach:${cpreachlist}">
+                            <tr>
+                                <td><a target="_blank" th:href="@{/recInfo(recid=${cpreach.recid})}" th:text="${cpreach.title}"></a></td>
+                                <td th:text="${cpreach.rectime}">2020</td>
+                                <td>
+                                    <form class="deleteClctRec">
+                                        <input type="hidden" th:value="${cpreach.crid}" name="crid">
+                                        <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                class="layui-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-tab-item">
+                        <table class="layui-table" lay-skin="line" style="width: 800px;">
+                            <colgroup>
+                                <col width="400px">
+                                <col width="200px">
+                                <col width="100px">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>项目名称</th>
+                                <th>发布时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="cp:${cplist}">
+                            <tr>
+                                <td><a target="_blank" th:href="@{/projectInfo(projectid=${cp.pid})}" th:text="${cp.pName}"></a></td>
+                                <td th:text="${cp.ptime}">2020</td>
+                                <td>
+                                    <form class="deleteClctProject">
+                                        <input type="hidden" th:value="${cp.cpid}" name="cpid">
+                                        <button  type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                                class="layui-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="layui/layui.all.js"></script>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //侧边导航，选项卡
+            $("#navmess").click(function () {
+                console.log("mess")
+                $("#blockmess").css("display", "block");
+                $("#blockprj").css("display", "none");
+                $("#blockclec").css("display", "none");
+            });
+            $("#navprj").click(function () {
+                console.log("prj")
+                $("#blockmess").css("display", "none");
+                $("#blockprj").css("display", "block");
+                $("#blockclec").css("display", "none");
+            });
+            $("#navclec").click(function () {
+                console.log("clec")
+                $("#blockmess").css("display", "none");
+                $("#blockprj").css("display", "none");
+                $("#blockclec").css("display", "block");
+            });
+        });
+        //删除接收消息
+        $(".deletemess").click(function () {
+            // $(this).parent().parent().remove();
+            var node=$(this).parent().parent();
+            $.ajax({
+                url:'deleterecivemess',
+                data:$(this).serialize(),                 //将表单数据序列化，格式为name=value
+                type:'POST',
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg);
+                    if(msg==200){
+                        node.remove();
+                    }
+                },
+                error:function(){
+                    console.log("提交ajax函数异常");
+                },
+            });
+        });
+        //删除已发送
+        $(".deletesendmess").click(function () {
+            // $(this).parent().parent().remove();
+            var node=$(this).parent().parent();
+            $.ajax({
+                url:'deletesendmess',
+                data:$(this).serialize(),                 //将表单数据序列化，格式为name=value
+                type:'POST',
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg);
+                    if(msg==200){
+                        node.remove();
+                    }
+                },
+                error:function(){
+                    console.log("提交ajax函数异常");
+                },
+            });
+        });
+
+        //删除项目
+        $(".deleteproject").click(function () {
+            // $(this).parent().parent().remove();
+            var node=$(this).parent().parent();
+            $.ajax({
+                url:'deleteproject',
+                data:$(this).serialize(),                 //将表单数据序列化，格式为name=value
+                type:'POST',
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg);
+                    if(msg==200){
+                        node.remove();
+                    }
+                },
+                error:function(){
+                    console.log("提交ajax函数异常");
+                },
+            });
+        });
+        //查看消息
+        $(".messinfo").click(function () {
+            console.log("messinfo");
+            $(this).parent().submit();
+        });
+        //删除收藏的招聘宣讲
+        $(".deleteClctRec").click(function () {
+            // $(this).parent().parent().remove();
+            var node=$(this).parent().parent();
+            $.ajax({
+                url:'deleteClctRec',
+                data:$(this).serialize(),                 //将表单数据序列化，格式为name=value
+                type:'POST',
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg);
+                    if(msg==200){
+                        node.remove();
+                    }
+                },
+                error:function(){
+                    console.log("提交ajax函数异常");
+                },
+            });
+        });
+    //    删除收藏的创业项目
+        $(".deleteClctProject").click(function () {
+            // $(this).parent().parent().remove();
+            var node=$(this).parent().parent();
+            $.ajax({
+                url:'deleteClctProject',
+                data:$(this).serialize(),                 //将表单数据序列化，格式为name=value
+                type:'POST',
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg);
+                    if(msg==200){
+                        node.remove();
+                    }
+                },
+                error:function(){
+                    console.log("提交ajax函数异常");
+                },
+            });
+        });
+
+    </script>
+</body>
+
+</html>

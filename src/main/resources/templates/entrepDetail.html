@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>就业信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="indexTemplates/nav"></div>
+<br>
+<div class="detl-content">
+    <h2 th:text="${entrep.title}">重庆交通大学招聘</h2>
+    <label th:text="${entrep.publishTime}">2020</label>
+    <br>
+    <hr>
+    <br>
+    <div id="detail">
+    </div>
+</div>
+<script src="layui/layui.all.js"></script>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="js/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+    var detail=/*[[${entrep.detail}]]*/2000;
+    document.getElementById("detail").innerHTML=detail;
+</script>
+</body>
+
+</html>

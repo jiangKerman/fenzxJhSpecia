@@ -1,90 +1,50 @@
+<!--suppress ThymeleafVariablesResolveInspection -->
 <div class="overflow-auto p-5  " xmlns:th="http://www.thymeleaf.org">
     <div class="p-3 rgba-white-strong border">
-        <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">
+<!--        table的style设置是为了td的内容能截断    https://blog.csdn.net/tuntun1120/article/details/72903387-->
+        <table class="table table-bordered table-hover" style="table-layout: fixed">
 
             <thead>
             <tr>
-                <th scope="col">问题编号</th>
-                <th scope="col">题目</th>
-                <th scope="col">提问日期</th>
-                <th scope="col">指导老师</th>
-                <th scope="col">提问类型</th>
-                <th scope="col">解决状态</th>
-                <th scope="col">操作</th>
+                <th scope="col">原文链接</th>
+
+                <th scope="col">公司名称</th>
+                <th scope="col">宣讲地址</th>
+                <th scope="col">宣讲时间</th>
+                <th scope="col">发布时间</th>
+                <th scope="col">消息性质</th>
+                <th scope="col">标题</th>
+                <th scope="col">单位网址</th>
+                <th scope="col">工作地点</th>
+                <th scope="col">学历要求</th>
+                <th scope="col">岗位名称</th>
+                <th scope="col">专业需求</th>
+                <th scope="col">薪资</th>
             </tr>
             </thead>
 
-                <tbody >
-                <tr>
+            <tbody class="text-nowrap">
+            <tr th:each="recruitment:${recruitmentList}">
+                <td><a class="green-text" th:href="${recruitment[2]}" target="_blank">查看原文</a></td>
 
-                    <td  class="hoverPrompt" data-content="暂无负责此问题的老师,请等待分配">
-                        <a class=" btn-outline-blue btn pt-1 pb-1 disabled hoverPrompt" data-content="在" onclick="viewDetail(this)"
-                           >未分配</a>
-                    </td>
-
-                </tr>
-                </tbody>
+                <td th:text="${recruitment[4]}" th:data-content="${recruitment[4]}"  class="text-truncate hoverPrompt" >公司名称</td>
+                <td th:text="${recruitment[5]}"  th:data-content="${recruitment[5]}"  class="text-truncate hoverPrompt" >宣讲地址</td>
+                <td th:text="${recruitment[6]}"  th:data-content="${recruitment[6]}"  class="text-truncate hoverPrompt" >宣讲时间</td>
+                <td th:text="${recruitment[7]}"  th:data-content="${recruitment[7]}"  class="text-truncate hoverPrompt" >发布时间</td>
+                <td th:text="${recruitment[8]}"  th:data-content="${recruitment[8]}"  class="text-truncate hoverPrompt" >消息性质</td>
+                <td th:text="${recruitment[10]}"  th:data-content="${recruitment[10]}"  class="text-truncate hoverPrompt" >标题</td>
+                <td th:text="${recruitment[11]}"  th:data-content="${recruitment[11]}"  class="text-truncate hoverPrompt" >单位网址</td>
+                <td th:text="${recruitment[12]}"  th:data-content="${recruitment[12]}"  class="text-truncate hoverPrompt" >工作地点</td>
+                <td th:text="${recruitment[13]}"  th:data-content="${recruitment[13]}"  class="text-truncate hoverPrompt" >学历要求</td>
+                <td th:text="${recruitment[15]}"  th:data-content="${recruitment[15]}"  class="text-truncate hoverPrompt" >岗位名称</td>
+                <td th:text="${recruitment[16]}"  th:data-content="${recruitment[16]}"  class="text-truncate hoverPrompt" >专业需求</td>
+                <td th:text="${recruitment[17]}"  th:data-content="${recruitment[17]}"  class="text-truncate hoverPrompt" >薪资</td>
+            </tr>
+            </tbody>
 
         </table>
 
     </div>
 </div>
-<!--<div class="col-9 p-2 overflow-auto" xmlns:th="http://www.thymeleaf.org">-->
-<!--    <table class="table table-bordered table-hover" xmlns:th="http://www.thymeleaf.org">-->
 
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th scope="col">问题编号</th>-->
-<!--            <th scope="col">题目</th>-->
-<!--            <th scope="col">提问日期</th>-->
-<!--            <th scope="col">指导老师</th>-->
-<!--            <th scope="col">提问类型</th>-->
-<!--            <th scope="col">解决状态</th>-->
-<!--            <th scope="col">操作</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <div>-->
-<!--            <tbody th:each="problem:${problemList}">-->
-<!--            <tr>-->
-<!--                <td th:text="${problem[0]}">问题编号</td>-->
-<!--                <td th:text="${problem[7]}">题目</td>-->
-<!--                <td th:text="${problem[6]}">2020年3月21日</td>-->
-<!--                <td th:text="${problem[9]}">王佳伟</td>-->
-<!--                <td th:text="${problem[3]}">就业</td>-->
-<!--                &lt;!&ndash;                <td th:text="${problem[4]}">解决状态</td>&ndash;&gt;-->
-<!--                <td th:if="${problem[4]}==0" class="red">未分配</td>-->
-<!--                <td th:if="${problem[4]}==1" class="yellow">处理中</td>-->
-<!--                <td th:if="${problem[4]}==2" class="green">已解决</td>-->
-
-<!--                <td th:if="${problem[4]}==0">-->
-<!--                    <a class=" btn-outline-blue btn pt-1 pb-1 disabled" onclick="viewDetail(this)"-->
-<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">等待分配老师</a>-->
-<!--                </td>-->
-<!--                <td th:if="${problem[4]}==1">-->
-<!--                    <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"-->
-<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>-->
-<!--                </td>-->
-<!--                <td th:if="${problem[4]}==2">-->
-<!--                    <a class=" btn-outline-blue btn pt-1 pb-1" onclick="viewDetail(this)"-->
-<!--                       th:attr="pid=${problem[0]},tid=${problem[11]}">查看</a>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </div>-->
-<!--    </table>-->
-<!--</div>-->
-
-<!--学生查看详情的参数表单-->
-<form action="/StudentViewQuestionDetail" id="viewDetailForm" method="post" style="display: none">
-    <input id="pid" name="pid">
-    <input id="tid" name="tid">
-</form>
-
-<script>
-    function viewDetail(btn) {
-        document.getElementById("pid").value = btn.getAttribute("pid");
-        document.getElementById("tid").value = btn.getAttribute("tid");
-        document.getElementById("viewDetailForm").submit();
-    }
-</script>
+<!--<div th:text="${recruitmentList}"></div>-->

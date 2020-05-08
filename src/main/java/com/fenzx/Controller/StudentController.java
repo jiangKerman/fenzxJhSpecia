@@ -95,8 +95,22 @@ public class StudentController {
     }
 
     @RequestMapping("recommendContent")
-    public String recommendContent(){
+    public String recommendContent(ModelMap modelMap,HttpSession session){
+        Student student = (Student) session.getAttribute("student");
+        String major="计算机";
+        if(student.getMajor().contains("计算机")){
+            major="计算机";
+        }
+        if(student.getMajor().contains("电子")){
+            major="电子";
+        }
 
+        System.out.println(major);
+
+
+        List<Object> recruitmentList = studentService.findAllRecruitmentWithSalaryLimitWithMajor(major,10);
+//        List<Object> recruitmentList = studentService.findAllRecruitmentWithSalaryLimit(0,10);
+        modelMap.put("recruitmentList",recruitmentList);
         return "student/studentRecommendContent";
     }
 

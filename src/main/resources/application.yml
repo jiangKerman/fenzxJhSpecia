@@ -18,12 +18,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: fenzxAdmin
     password: freeKerman
-    #    https://blog.csdn.net/qq_38023253/article/details/80815618
-    #    #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
-#    dbcp2:
-#      validation-query: SELECT 1
-#      test-on-borrow: true
-#      test-on-return: true
-#      test-while-idle: true
-
-
+#    https://blog.csdn.net/darkread/article/details/89562148  这是有用的
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: SELECT 1

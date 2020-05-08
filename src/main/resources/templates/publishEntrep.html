@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>信息发布</title>
+    <!-- <div th:replace="indexTemplates/head"></div> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="summernote/summernote.css">
+</head>
+<body>
+<div th:replace="indexTemplates/nav"></div>
+<br>
+<div>
+    <form id="form" action="/submitEntrep" method="post">
+        <div>
+            <a style="color: red;" href="/publishRec.html">发布招聘、实习或宣讲</a>
+        </div>
+        <div>
+            <label>*标题</label>
+            <div>
+                <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题">
+            </div>
+        </div>
+        <div id="radioGroup">
+            <br>
+            <label>*类别</label>
+            <label style="margin-left: 50px">创业资讯</label>
+            <input type="radio" class="quality-radio" name="quality" value="资讯">
+            <label style="margin-left: 50px">创业政策</label>
+            <input type="radio" class="quality-radio" name="quality" value="政策">
+        </div>
+        <div>
+            <label>*详情</label>
+            <div>
+                <textarea  id="summernote" name="editordata" ></textarea>
+            </div>
+        </div>
+        <div>
+            <br>
+            <p style="color: red">注：“*”号标注的为必填项</p>
+            <button type="submit" id="submit" class="layui-btn layui-btn-fluid">发布</button>
+        </div>
+    </form>
+</div>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="js/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="js/npm.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="summernote/summernote.js"></script>
+<script src="js/publish.js"></script>
+<script th:inline="javascript">
+    msg=/*[[${msg}]]*/"";
+    if(msg=="200"){
+        alert("发布成功");
+    }else if(msg=="201"){
+        alert("有“*”号字段未填");
+    }
+</script>
+</body>
+</html>

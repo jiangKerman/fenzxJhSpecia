@@ -7,5 +7,17 @@ html, body {
 }
 
 .hoverPrompt{
-
 }
+
+.room-cell {
+    display: inline-block;//这样写有好处就是，span后面不会出现消不掉的margin-xxx填充，以前是这样的display:block;
+    table-layout: fixed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*!*用于td中字符太长的截断    参考  https://blog.csdn.net/tuntun1120/article/details/72903387  *!*/
+/*td {*/
+/*    white-space:nowrap;overflow:hidden;text-overflow: ellipsis;*/
+/*}*/

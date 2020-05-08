@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改项目</title>
+    <!-- <div th:replace="indexTemplates/head"></div> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="summernote/summernote.css">
+</head>
+<body>
+<div th:replace="indexTemplates/nav"></div>
+<br>
+<div>
+    <form id="form" action="/submitProject" method="post">
+        <div>
+            <label>*项目名称</label>
+            <div>
+                <input type="hidden" name="projectid" th:value="${project.id}">
+                <input th:value="${project.pName}" type="text" class="form-control" name="projectName" placeholder="请输入项目名称">
+            </div>
+        </div>
+        <div>
+            <br>
+            <label>*所属领域</label><br>
+            <div id="fieldcheck" style="display: inline" th:each="field:${fields}">
+                <input type="checkbox" name="field"  th:value="${field.id}">
+                <label style="margin-right: 30px" th:text="${field.fName}">计算机</label>
+            </div>
+            <input style="display: none" type="text" value="" id="addname">
+            <button style="display: none" type="button" id="addenter"
+                    class="layui-btn layui-btn-normal layui-btn-sm">确认</button>
+            <button type="button" id="addbtn" class="layui-btn layui-btn-normal layui-btn-sm"><i
+                    class="layui-icon"></i></button>
+        </div>
+        <div id="radioGroup">
+            <br>
+            <label>*当前进展</label>
+            <label style="margin-left: 50px">创意计划</label>
+            <input type="radio" class="quality-radio" name="evolve" value="创意计划">
+            <label style="margin-left: 50px">已注册公司</label>
+            <input type="radio" class="quality-radio" name="evolve" value="已注册公司">
+            <label style="margin-left: 50px">已注册社会组织</label>
+            <input type="radio" class="quality-radio" name="evolve" value="已注册社会组织">
+        </div>
+        <div>
+            <br>
+            <label>*项目概况</label>
+            <div>
+                <textarea id="summernote" name="survey"></textarea>
+            </div>
+        </div>
+        <div>
+            <label>*备注</label>
+            <div>
+                <input th:value="${project.remark}" type="text" class="form-control" name="remark" placeholder="请输入项目名称">
+            </div>
+        </div>
+        <div>
+            <br>
+            <p id="p" style="color: red">注：“*”号标注的为必填项</p>
+            <button style="float:left;width: 90%;" type="submit" id="submit" class="layui-btn">确认修改</button>
+            <a style="display: inline;float: right;color: red" href="/stuhome">取消</a>
+        </div>
+    </form>
+</div>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="js/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="js/npm.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="summernote/summernote.js"></script>
+<script src="js/publish.js"></script>
+<script>
+    $(function () {
+        $("#addbtn").click(function () {
+            $("#addname").css("display", "inline");
+            $("#addenter").css("display", "inline");
+            $("#addbtn").css("display", "none");
+        });
+        $("#addenter").click(function () {
+            $("#addname").css("display", "none");
+            $("#addname").attr("value","");
+            $("#addenter").css("display", "none");
+            $("#addbtn").css("display", "inline");
+            var fieldname=$("#addname").val();
+            if(fieldname!=""){
+                $.ajax({
+                    url: "/addField?fieldName="+fieldname,
+                    context: fieldname,
+                    success: function (msg) {
+                        console.log(msg);
+                        var html=$("<input type='checkbox' name='field' value="+msg+"><label style='margin-right: 30px'>"+fieldname+"</label>");
+                        $("#fieldcheck").prepend(html);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script th:inline="javascript">
+    $(function () {
+        var evolve=/*[[${project.evolve}]]*/"";
+        var survey=/*[[${project.survey}]]*/"";
+        $("input[value="+evolve+"]").attr('checked','true');
+        $(".note-editable").html(survey)
+        var fids=/*[[${fids}]]*/[];
+        console.log(fids);
+        for(var i in fids){
+            console.log(fids[i]);
+            $("input[value="+fids[i]+"]").attr("checked", 'checked');
+        }
+    });
+</script>
+</body>
+
+</html>
