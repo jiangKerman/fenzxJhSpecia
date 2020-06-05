@@ -30,14 +30,26 @@
                 top: top + "px"
             });
             console.log(top);
+
+            //屏幕大小改变时也要适配页脚
+            $(".kerman-content").css({
+                'min-height': $(window).height()-$("footer").height()
+            });
         });
 
 
         //设置footer粘贴到底部
-        var footerHeight = $("footer").height();
-        $("footer").css({
-            "margin-top": "-" + footerHeight + "px"
+        $(".kerman-content").css({
+            'min-height': $(window).height()-$("footer").height()
         });
+        //当内容+页脚高度都小于浏览器高度的时候
+        // var windowHeight=$(window).height(); //获取浏览器可视区域高度
+        // if($("footer").height()+$(".kerman-content").height()<windowHeight){
+        //     var footerHeight = $("footer").height();
+        //     $("footer").css({
+        //         "margin-top": "-" + footerHeight + "px"
+        //     });
+        // }
 
         // 设置header粘贴到顶部
         $(window).scroll(function (e) {

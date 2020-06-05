@@ -1,0 +1,79 @@
+<style>
+    #hidebg {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color: #000;
+        width: 100%;
+        /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+        filter: alpha(opacity=60);
+        /*设置透明度为60%*/
+        opacity: 0.6;
+        /*非IE浏览器下设置透明度为60%*/
+        display: none;
+        /* http://www.jb51.net */
+        z-Index: 2;
+    }
+    #logincard {
+        padding: 20px;
+        position: absolute;
+        width: 30%;
+        min-width: 250px;
+        height: 300px;
+        top: 100px;
+        left: 35%;
+        right: 35%;
+        background-color: #fff;
+        display: none;
+        cursor: pointer;
+        z-Index: 3;
+    }
+</style>
+<div id="hidebg">
+</div>
+<div id="logincard">
+    <form id="loginform" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="userid" placeholder="用户名">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="密码">
+        </div>
+        <button id="login" class="btn btn-primary btn-lg btn-block">登录</button>
+    </form>
+    <button class="btn btn-warning btn-lg btn-block" onClick="hide();">取消</button>
+</div>
+<script>
+    function show()  //显示隐藏层和弹出层
+    {
+        var hideobj = document.getElementById("hidebg");
+        hidebg.style.display = "block";  //显示隐藏层
+        hidebg.style.height = document.body.clientHeight + "px";  //设置隐藏层的高度为当前页面高度
+        document.getElementById("logincard").style.display = "block";  //显示弹出层
+    }
+    function hide()  //去除隐藏层和弹出层
+    {
+        document.getElementById("hidebg").style.display = "none";
+        document.getElementById("logincard").style.display = "none";
+    }
+    $("#login").click(function () {
+        $.ajax({
+            type:'post',
+            url:"/loginAjax",
+            cache: false,
+            data:$("#loginform").serialize(),  //重点必须为一个变量如：data
+            dataType:'json',
+            success:function(msg){
+                console.log(msg);
+                if(msg==200){
+                    alert("登录成功");
+                    hide();
+                }else if(msg==201){
+                    alert("用户名或密码错误");
+                }
+            }
+        })
+    });
+</script>

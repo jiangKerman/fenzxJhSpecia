@@ -1,208 +1,269 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>重庆交通大学信息科学与工程学院就业创业</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/calendar.css">
-</head>
+<head th:replace="indexTemplates/head"></head>
+<title>就业创业咨询指导平台</title>
 <body>
-<!--导航栏开始-->
-<div th:replace="indexTemplates/nav"></div>
-<!--导航栏结束-->
-<div class="layui-carousel" id="test1">
-    <div carousel-item>
-        <div class="slideshow" style="background-image: url(img/fewfewfew.jpg)"></div>
-        <div class="slideshow" style="background-image: url(img/32131231.jpg)"></div>
-    </div>
-</div>
-<div class="content">
-    <div class="content-block">
-        <div class="ct-block-header" style="background-color: #4285f4;">招聘信息</div>
-        <div class="item-block">
-            <div  th:each="rec:${recInfoHome}">
-                <div class="content-item">
-                    <div class="ct-title"> <a target="_blank" th:href="@{/recInfo(recid=${rec.id})}" th:text="${rec.title}">阿里</a></div>
-                    <div class="ct-date" th:text="${rec.publishTime}">2018-03-04</div>
+<!-- header-section-starts -->
+<div class="container">
+    <div class="news-paper">
+        <div th:replace="indexTemplates/nav"></div>
+        <!-- --------------------------------------------------------页头结束-------------------------------------------------- -->
+        <style>
+            .my-item {
+                width: 100%
+            }
+
+            .my-title {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 25px;
+                width: 75%;
+                padding-left: 5px;
+            }
+            .my-date {
+                width: 20%;
+                word-break: keep-all;
+                float: right;
+                white-space: nowrap;
+            }
+        </style>
+        <div class="main-content">
+            <div class="col-md-9 total-news">
+                <div class="slider">
+                    <script>
+                        // You can also use "$(window).load(function() {"
+                        $(function () {
+                            $("#conference-slider").responsiveSlides({
+                                auto: true,
+                                manualControls: '#slider3-pager',
+                            });
+                        });
+                    </script>
+                    <div class="layui-carousel" id="silder">
+                        <div carousel-item>
+                            <div><img src="https://i.loli.net/2020/06/03/DEyjsgoImSRbcWk.png"></div>
+                            <div><img src="https://i.loli.net/2020/06/03/j5sULFu1bKorPwB.png"></div>
+                            <div><img src="https://i.loli.net/2020/06/03/RKGvjpcMENr5LPZ.png"></div>
+                            <div><img src="https://i.loli.net/2020/06/03/roIEu28OzKt3aPf.png"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- 条目中可以是任意内容，如：<img src=""> -->
+                    <script src="/static/build/layui.js"></script>
+                    <script>
+                        layui.use('carousel', function () {
+                            var carousel = layui.carousel;
+                            //建造实例
+                            carousel.render({
+                                elem: '#silder'
+                                , width: '100%' //设置容器宽度
+                                , arrow: 'always' //始终显示箭头
+                                //,anim: 'updown' //切换动画方式
+                            });
+                        });
+                    </script>
                 </div>
-            </div>
-        </div>
-        <button style="margin-left: 40%;margin-top: 20px" class="layui-btn layui-btn-radius layui-btn-normal"><a href="/infopage?quality=招聘">查看更多</a></button>
-    </div>
-    <div class="content-block" style="background-color: rgb(255, 255, 255);">
-        <div class="ct-block-header" style="background-color: cornflowerblue;">实习信息</div>
-        <div class="item-block">
-            <div  th:each="inter:${interInfoHome}">
-                <div class="content-item">
-                    <div class="ct-title"> <a target="_blank" th:href="@{/recInfo(recid=${inter.id})}" th:text="${inter.title}">阿里</a></div>
-                    <div class="ct-date" th:text="${inter.publishTime}">2018-03-04</div>
+                <div class="world-news">
+                    <div class="main-title-head">
+                        <h3>招聘</h3>
+                        <a href="infopage">More +</a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="my-item" th:each="rec:${recInfoHome}">
+                        <div class="my-title">
+                            <a target="_blank" th:href="@{/recInfo(recid=${rec.id})}"
+                               th:text="${rec.title}">阿里</a>
+                        </div>
+                        <div class="my-date" th:text="${rec.publishTime}">
+                            2010-06-07 21:30:20
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <button style="margin-left: 40%;margin-top: 20px" class="layui-btn layui-btn-radius layui-btn-normal"><a href="/infopage?quality=实习">查看更多</a></button>
-    </div>
-    <div class="content-block">
-        <div class="ct-block-header" style="background-color: #4285f4;">宣讲/双选会</div>
-        <div class="item-block">
-            <div  th:each="rec:${preachInfoHome}">
-                <div class="content-item">
-                    <div class="ct-title"> <a target="_blank" th:href="@{/recInfo(recid=${rec.id})}" th:text="${rec.title}">阿里</a></div>
-                    <div class="ct-date" th:text="${rec.publishTime}">2018-03-04</div>
+                <div class="world-news">
+                    <div class="main-title-head">
+                        <h3>实习</h3>
+                        <a href="infopage">More +</a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="my-item" th:each="inter:${interInfoHome}">
+                        <div class="my-title" >
+                            <a target="_blank" th:href="@{/recInfo(recid=${inter.id})}"
+                               th:text="${inter.title}">阿里</a>
+                        </div>
+                        <div class="my-date" th:text="${inter.publishTime}">
+                            2010-06-07 21:30:20
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <button style="margin-left: 40%;margin-top: 20px" class="layui-btn layui-btn-radius layui-btn-normal"><a href="/infopage?quality=宣讲">查看更多</a></button>
-    </div>
-    <!-- 日历 -->
-    <div style="background-color: rgb(255, 255, 255);width: 16%;">
-        <!--<script th:inline="javascript" src="js/calendar.js"></script>-->
-        <div id="calendar">
-            <div class="cal-header" id="cal-header">
-                <i id="prev" class="layui-icon layui-icon-prev" style="cursor: pointer"></i>
-                <label id="caleyear" style="margin-left: 20px;">2020</label>
-                <label>年</label>
-                <label id="calemonth">10</label>
-                <label>月</label>
-                <i id="next" class="layui-icon layui-icon-next"
-                   style="float: right;margin-top: 5px;margin-right:10px;cursor: pointer"></i>
+                <div class="world-news">
+                    <div class="main-title-head">
+                        <h3>宣讲会/双选会</h3>
+                        <a href="infopage">More +</a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="my-item" th:each="rec:${preachInfoHome}">
+                        <div class="my-title">
+                            <a target="_blank" th:href="@{/recInfo(recid=${rec.id})}"
+                               th:text="${rec.title}">阿里</a>
+                        </div>
+                        <div class="my-date" th:text="${rec.publishTime}">
+                            2010-06-07 21:30:20
+                        </div>
+                    </div>
+                </div>
 
             </div>
-            <table border="1" align="center" class="cal-body" style="height: 200px; width: 95%;text-align:center">
-                <tr>
-                    <th>一</th>
-                    <th>二</th>
-                    <th>三</th>
-                    <th>四</th>
-                    <th>五</th>
-                    <th>六</th>
-                    <th>日</th>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                    <td id="7"></td>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="8"></td>
-                    <td id="9"></td>
-                    <td id="10"></td>
-                    <td id="11"></td>
-                    <td id="12"></td>
-                    <td id="13"></td>
-                    <td id="14"></td>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="15"></td>
-                    <td id="16"></td>
-                    <td id="17"></td>
-                    <td id="18"></td>
-                    <td id="19"></td>
-                    <td id="20"></td>
-                    <td id="21"></td>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="22"></td>
-                    <td id="23"></td>
-                    <td id="24"></td>
-                    <td id="25"></td>
-                    <td id="26"></td>
-                    <td id="27"></td>
-                    <td id="28"></td>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="29"></td>
-                    <td id="30"></td>
-                    <td id="31"></td>
-                    <td id="32"></td>
-                    <td id="33"></td>
-                    <td id="34"></td>
-                    <td id="35"></td>
-                </tr>
-                <tr style="height: 15%">
-                    <td id="36"></td>
-                    <td id="37"></td>
-                    <td id="38"></td>
-                    <td id="39"></td>
-                    <td id="40"></td>
-                    <td id="41"></td>
-                    <td id="42"></td>
-                </tr>
-            </table>
+            <div class="col-md-3 side-bar">
+                <div class="sign_up text-center">
+                    <div id="calendar">
+                        <div class="cal-header" id="cal-header">
+                            <i id="prev" class="layui-icon layui-icon-prev" style="cursor: pointer"></i>
+                            <label id="caleyear" style="margin-left: 20px;">2020</label>
+                            <label>年</label>
+                            <label id="calemonth">10</label>
+                            <label>月</label>
+                            <i id="next" class="layui-icon layui-icon-next"
+                               style="float: right;margin-top: 5px;margin-right:10px;cursor: pointer"></i>
+
+                        </div>
+                        <table border="1" align="center" class="cal-body"
+                               style="height: 200px; width: 95%;text-align:center">
+                            <tr>
+                                <th>一</th>
+                                <th>二</th>
+                                <th>三</th>
+                                <th>四</th>
+                                <th>五</th>
+                                <th>六</th>
+                                <th>日</th>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="1"></td>
+                                <td id="2"></td>
+                                <td id="3"></td>
+                                <td id="4"></td>
+                                <td id="5"></td>
+                                <td id="6"></td>
+                                <td id="7"></td>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="8"></td>
+                                <td id="9"></td>
+                                <td id="10"></td>
+                                <td id="11"></td>
+                                <td id="12"></td>
+                                <td id="13"></td>
+                                <td id="14"></td>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="15"></td>
+                                <td id="16"></td>
+                                <td id="17"></td>
+                                <td id="18"></td>
+                                <td id="19"></td>
+                                <td id="20"></td>
+                                <td id="21"></td>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="22"></td>
+                                <td id="23"></td>
+                                <td id="24"></td>
+                                <td id="25"></td>
+                                <td id="26"></td>
+                                <td id="27"></td>
+                                <td id="28"></td>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="29"></td>
+                                <td id="30"></td>
+                                <td id="31"></td>
+                                <td id="32"></td>
+                                <td id="33"></td>
+                                <td id="34"></td>
+                                <td id="35"></td>
+                            </tr>
+                            <tr style="height: 15%">
+                                <td id="36"></td>
+                                <td id="37"></td>
+                                <td id="38"></td>
+                                <td id="39"></td>
+                                <td id="40"></td>
+                                <td id="41"></td>
+                                <td id="42"></td>
+                            </tr>
+                        </table>
+                        <script th:inline="javascript">
+
+                            window.onload = function () {
+                                /**
+                                 * 返回当月天数
+                                 */
+                                function daysasmonth(asyear, asmonth) {
+                                    if (asmonth == 1 || asmonth == 3 || asmonth == 5 || asmonth == 7 || asmonth == 8 || asmonth == 10 || asmonth == 12) {
+                                        return 31;
+                                    }
+                                    else if (asmonth == 4 || asmonth == 6 || asmonth == 9 || asmonth == 11) {
+                                        return 30;
+                                    }
+                                    else if (asyear % 4 != 0) {
+                                        return 28;
+                                    }
+                                    else if (asyear % 400 == 0) {
+                                        return 29;
+                                    } else if (asyear % 100 == 0) {
+                                        return 28;
+                                    } else {
+                                        return 29;
+                                    }
+                                }
+                                var year =/*[[${year}]]*/2000;
+                                var month =/*[[${month}]]*/1;
+                                var date =/*[[${date}]]*/1;
+                                var week = [7, 1, 2, 3, 4, 5, 6];
+                                document.getElementById("caleyear").innerHTML = year;
+                                document.getElementById("calemonth").innerHTML = month;
+                                console.log("" + year + month + date);
+                                var dayone = new Date(year, month - 1, 1).getDay();
+                                var dayone2 = week[dayone];
+                                console.log("dayone2" + dayone2);
+                                var dayCalendar = 1;
+                                for (var c = dayone2; c <= daysasmonth(year, month) + dayone2 - 1; c++) {
+                                    var t = document.getElementById(c);
+                                    if (c - dayone2 + 1 == date) {
+                                        console.log(c);
+                                        t.style.backgroundColor = "aquamarine";
+                                    }
+                                    t.innerHTML = dayCalendar;
+                                    dayCalendar++;
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="popular">
+                    <div class="main-title-head">
+                        <h5>最新发布</h5>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="popular-news" th:each="recmd:${recommend}">
+                        <div class="popular-grid">
+                            <i th:text="${recmd.publishTime}">Sept 24th 2011 </i>
+                            <br>
+                            <a th:text="${recmd.title}" th:href="@{/recInfo(recid=${recmd.id})}">Lorem ipsum dolor sit amet conse ctetur adipiscing elit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
         </div>
+        <!--------------------------------------------------------- 页脚 -------------------------------------------------------->
+        <div th:replace="indexTemplates/footer"></div>
     </div>
 </div>
-<div th:replace="indexTemplates/footer"></div>
-<script src="layui/layui.all.js"></script>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="js/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/bootstrap.min.js"></script>
-    <script th:inline="javascript">
-
-        window.onload = function () {
-            /**
-             * 返回当月天数
-             */
-            function daysasmonth(asyear, asmonth) {
-                if (asmonth == 1 || asmonth == 3 || asmonth == 5 || asmonth == 7 || asmonth == 8 || asmonth == 10 || asmonth == 12) {
-                    return 31;
-                }
-                else if (asmonth == 4 || asmonth == 6 || asmonth == 9 || asmonth == 11) {
-                    return 30;
-                }
-                else if (asyear % 4 != 0) {
-                    return 28;
-                }
-                else if (asyear % 400 == 0) {
-                    return 29;
-                } else if (asyear % 100 == 0) {
-                    return 28;
-                } else {
-                    return 29;
-                }
-            }
-            var year=/*[[${year}]]*/2000;
-            var month=/*[[${month}]]*/1;
-            var date=/*[[${date}]]*/1;
-            var week=[7,1,2,3,4,5,6];
-            document.getElementById("caleyear").innerHTML=year;
-            document.getElementById("calemonth").innerHTML=month;
-            console.log(""+year+month+date)
-            var dayone=new Date(year,month-1,1).getDay();
-            var dayone2=week[dayone];
-            console.log("dayone2"+dayone2)
-            var dayCalendar=1;
-            for (var c = dayone2; c <= daysasmonth(year, month) + dayone2 - 1; c++) {
-                var t = document.getElementById(c);
-                if(c-dayone2+1==date){
-                    console.log(c);
-                    t.style.backgroundColor="aquamarine";
-                }
-                t.innerHTML = dayCalendar;
-                dayCalendar++;
-            }
-        }
-    </script>
-    <script>
-        layui.use('carousel', function () {
-            var carousel = layui.carousel;
-            //建造实例
-            carousel.render({
-                elem: '#test1'
-                , width: '100%' //设置容器宽度
-                , arrow: 'always' //始终显示箭头
-                //,anim: 'updown' //切换动画方式
-            });
-        });
-    </script>
 </body>
 </html>

@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>信息发布</title>
-    <!-- <div th:replace="indexTemplates/head"></div> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="layui/css/layui.css">
-</head>
-
+<head th:replace="indexTemplates/head"></head>
+<title>私信</title>
 <body>
-    <div style="width:1000px;margin:50px auto">
-        <h3 th:text="${mess.senderName}">其德隆东墙</h3>
-        <h4 th:text="${mess.time}">2020-02-04</h4>
-        <br>
-        <pre th:text="${mess.content}" style="font-size: 15px"> Error resolving template [200]</pre>
-        <br>
-        <form action="/reply" method="post">
-            <textarea name="replytext" placeholder="回复" class="layui-textarea"></textarea>
-            <input name="messid" type="hidden" th:value="${mess.id}">
+<!-- header-section-starts -->
+<div class="container">
+    <div class="news-paper">
+        <div th:replace="indexTemplates/nav"></div>
+        <!-------------------------------正文开始-------------------------------------->
+        <div style="width:1000px;margin:50px auto">
+            <h3 th:text="${mess.senderName}">其德隆东墙</h3>
+            <h4 th:text="${mess.time}">2020-02-04</h4>
             <br>
-        <button type="submit" id="commentsub" class="layui-btn">回复</button>
-        </form>
+            <pre th:text="${mess.content}" style="font-size: 15px"> Error resolving template [200]</pre>
+            <br>
+            <form action="/reply" method="post">
+                <textarea name="replytext" placeholder="回复" class="layui-textarea"></textarea>
+                <input name="messid" type="hidden" th:value="${mess.id}">
+                <br>
+                <button type="submit" id="commentsub" class="layui-btn">回复</button>
+            </form>
+        </div>
+        <!-------------------------------正文结束-------------------------------------->
+        <div th:replace="indexTemplates/footer"></div>
+    </div>
 </div>
-    <script src="layui/layui.all.js"></script>
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="js/jquery.min.js"></script>
-    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-    <script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>

@@ -1,7 +1,7 @@
 <!--        左侧功能栏，显示可进行的操作-->
 <div class="col-3 col-lg-2 text-center border p-0 float-left" id="sidebar" th:fragment="teacherMenu"
      xmlns:th="http://www.thymeleaf.org">
-    <img src="https://i.loli.net/2020/04/17/7TNJW6uEsn1tdja.png"
+    <img src="http://202.202.240.234/assets/user-c9bd28cb2596c5fa4054092fdbdf089d58dbfcc6bbdfb5d49343dfd26b21bb3c.jpg"
          class="img-fluid" alt="Responsive image" width="100%">
     <span th:text="${session.teacher.name}">王佳伟</span>
     <br>
@@ -17,57 +17,52 @@
         <tr>
             <td><a href="/defaultTeacherAllProblem.html">问题查看</a></td>
         </tr>
-<!--        <tr>-->
-<!--            <td>&lt;!&ndash; Collapse buttons &ndash;&gt;-->
-<!--                <div>-->
-<!--                    <a class="dropdown-toggle " data-toggle="collapse"-->
-<!--                       data-target="#collapseProblem"-->
-<!--                       aria-expanded="false" aria-controls="collapseProblem">-->
-<!--                        问题查看-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; / Collapse buttons &ndash;&gt;-->
+        <!--        <tr>-->
+        <!--            <td>&lt;!&ndash; Collapse buttons &ndash;&gt;-->
+        <!--                <div>-->
+        <!--                    <a class="dropdown-toggle " data-toggle="collapse"-->
+        <!--                       data-target="#collapseProblem"-->
+        <!--                       aria-expanded="false" aria-controls="collapseProblem">-->
+        <!--                        问题查看-->
+        <!--                    </a>-->
+        <!--                </div>-->
+        <!--                &lt;!&ndash; / Collapse buttons &ndash;&gt;-->
 
-<!--                &lt;!&ndash; Collapsible element &ndash;&gt;-->
-<!--                <div class="collapse" id="collapseProblem">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a class="dropdown-item" href="/teacherSolvedProblem.html">查看已解决问题</a>-->
-<!--                        <a class="dropdown-item" href="/teacherUnsolvedProblem.html">查看未解决问题</a>-->
-<!--                        <hr>-->
-<!--                        <a class="dropdown-item" href="/defaultTeacherAllProblem.html">查看所有问题</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; / Collapsible element &ndash;&gt;-->
-<!--            </td>-->
+        <!--                &lt;!&ndash; Collapsible element &ndash;&gt;-->
+        <!--                <div class="collapse" id="collapseProblem">-->
+        <!--                    <div class="mt-3">-->
+        <!--                        <a class="dropdown-item" href="/teacherSolvedProblem.html">查看已解决问题</a>-->
+        <!--                        <a class="dropdown-item" href="/teacherUnsolvedProblem.html">查看未解决问题</a>-->
+        <!--                        <hr>-->
+        <!--                        <a class="dropdown-item" href="/defaultTeacherAllProblem.html">查看所有问题</a>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                &lt;!&ndash; / Collapsible element &ndash;&gt;-->
+        <!--            </td>-->
 
-<!--        </tr>-->
+        <!--        </tr>-->
         <tr>
-            <td><a  onclick="teacherExportProblem()"  class="hoverPrompt " data-content="数据可导出后在excel中二次处理">数据导出</a></td>
+            <td><a onclick="teacherExportProblem()" class="hoverPrompt " data-content="数据可导出后在excel中二次处理">数据导出</a></td>
         </tr>
+        <td><!-- Collapse buttons -->
+            <div>
+                <a class="dropdown-toggle " data-toggle="collapse"
+                   data-target="#publishProblem"
+                   aria-expanded="false" aria-controls="publishProblem">
+                    发布信息
+                </a>
+            </div>
+            <!-- / Collapse buttons -->
 
-<!--        <tr>-->
-<!--            <td>&lt;!&ndash;数据导出按钮&ndash;&gt;-->
-<!--                <div>-->
-<!--                    <a class="dropdown-toggle " data-toggle="collapse"-->
-<!--                       data-target="#exportDataBtn"-->
-<!--                       aria-expanded="false" aria-controls="exportDataBtn">-->
-<!--                        数据导出-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; / Collapse buttons &ndash;&gt;-->
-
-<!--                &lt;!&ndash; Collapsible element &ndash;&gt;-->
-<!--                <div class="collapse" id="exportDataBtn">-->
-<!--                    <div class="mt-3">-->
-<!--                        <a class="dropdown-item" href="/teacherSolvedProblem.html">已解决问题</a>-->
-<!--                        <a class="dropdown-item" href="/teacherUnsolvedProblem.html">未解决问题</a>-->
-<!--                        <hr>-->
-<!--                        <button class="dropdown-item" onclick="teacherExportProblem()">已分配问题</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; / Collapsible element &ndash;&gt;-->
-<!--            </td>-->
-<!--        </tr>-->
+            <!-- Collapsible element -->
+            <div class="collapse" id="publishProblem">
+                <div class="mt-3">
+                    <a class="dropdown-item" href="/publishRec.html">就业信息</a>
+                    <a class="dropdown-item" href="/publishEntrep.html">创业资讯/政策</a>
+                </div>
+            </div>
+            <!-- / Collapsible element -->
+        </td>
         </tbody>
     </table>
 </div>

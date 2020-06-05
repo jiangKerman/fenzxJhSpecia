@@ -3,24 +3,113 @@
     <nav class="navbar navbar-expand navbar-dark primary-color ">
 
         <!-- Navbar brand -->
-
-        <a class="navbar-brand col-9" href="#">就业分中心管理系统</a>
+        <a class="navbar-brand" href="/index">就业分中心管理系统</a>
 
         <!-- Collapsible content -->
-        <!-- Links -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
 
-        <div class="col-3 ">
-            <ul class="navbar-nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="logout">退出系统👉</a>
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">指导咨询
+                        <span class="sr-only">(current)</span>
+                    </a>
                 </li>
-            </ul>
-        </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">创业服务</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">学院风采</a>
+                </li>
 
-        <!-- Links -->
+<!--                &lt;!&ndash; Dropdown &ndash;&gt;-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"-->
+<!--                       aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+<!--                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                    </div>-->
+<!--                </li>-->
+
+            </ul>
+            <!-- Links -->
+            <div class="col-3" th:if="${session.student}!=null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:text="${session.student.name}">学生名字</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="" th:if="${session.student}!=null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link"  th:href="stuhome" target="_blank">学生主页</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-3" th:if="${session.teacher}!=null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:text="${session.teacher.name}">欢迎你</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-3" th:if="${session.admin}!=null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:text="'管理员'">欢迎你</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="" th:if="${session.student}!=null or ${session.admin}!=null or ${session.teacher}!=null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">退出系统👉</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="" th:if="${session.student}==null and ${session.admin}==null and ${session.teacher}==null ">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">登陆</a>
+                    </li>
+                </ul>
+            </div>
+
+
+
+        </div>
         <!-- Collapsible content -->
 
     </nav>
+    <!--/.Navbar-->
+
+    <!--Navbar-->
+<!--    <nav class="navbar navbar-expand navbar-dark primary-color ">-->
+
+<!--        &lt;!&ndash; Navbar brand &ndash;&gt;-->
+
+<!--        <a class="navbar-brand col-9" href="#">就业分中心管理系统</a>-->
+
+<!--        &lt;!&ndash; Collapsible content &ndash;&gt;-->
+<!--        &lt;!&ndash; Links &ndash;&gt;-->
+
+<!--        <div class="col-3 ">-->
+<!--            <ul class="navbar-nav justify-content-end">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="logout">退出系统👉</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Links &ndash;&gt;-->
+<!--        &lt;!&ndash; Collapsible content &ndash;&gt;-->
+
+<!--    </nav>-->
     <!--/.Navbar-->
 </div>
 

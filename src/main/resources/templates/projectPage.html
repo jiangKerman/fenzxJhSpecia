@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>信息</title>
-    <!-- <div th:replace="indexTemplates/head"></div> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="layui/css/layui.css">
-</head>
+<head th:replace="indexTemplates/head"></head>
+<title>创业列表</title>
 <body>
-<!--导航栏开始-->
-<div th:replace="indexTemplates/nav"></div>
-<!--导航栏结束-->
-<br>
-<div class="content">
-    <!--二级导航结束-->
-    <div style="width: 1200px;">
+<!-- header-section-starts -->
+<div class="container">
+    <div class="news-paper">
+        <div th:replace="indexTemplates/nav"></div>
+        <!-------------------------------正文开始-------------------------------------->
+        <div th:replace="indexTemplates/secondnav"></div>
+        <div style="width: 1200px;">
             <!--搜索框-->
             <div style="width:1200px;">
                 <input type="text" style="display:inline; width:200px" class="form-control" th:value="${pageParam.key}"
@@ -29,79 +20,74 @@
                     <label>所属领域：</label>
                     <button type="button" id="0" class="layui-btn layui-btn-primary layui-btn-sm">全部</button>
                     <div style="display: inline" th:each="field:${fields}">
-                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" th:id="${field.id}" th:text="${field.fName}">计算机</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" th:id="${field.id}" th:text="${field.fName}">计算机</button>
                     </div>
                 </div>
             </div>
-        <!--列表-->
-        <div>
-            <table class="layui-table" lay-skin="line" style="width: 1200px;">
-                <colgroup>
-                    <col width="800px">
-                    <col width="200px">
-                    <col width="200px">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>项目名称</th>
-                    <th>发布时间</th>
-                    <th>项目进展</th>
-                </tr>
-                </thead>
-                <tbody th:each="project:${projects}">
-                <tr>
-                    <td><a target="_blank" th:href="@{/projectInfo(projectid=${project.id})}" th:text="${project.pName}">就业创业咨询指导平台</a></td>
-                    <td th:text="${project.publishTime}">2020-06-09</td>
-                    <td th:text="${project.evolve}">融资</td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="demo2"></div>
+            <!--列表-->
+            <div>
+                <table class="layui-table" lay-skin="line" style="width: 900px;">
+                    <colgroup>
+                        <col width="500px">
+                        <col width="200px">
+                        <col width="200px">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>发布时间</th>
+                        <th>项目进展</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="project:${projects}">
+                    <tr>
+                        <td><a target="_blank" th:href="@{/projectInfo(projectid=${project.id})}" th:text="${project.pName}">就业创业咨询指导平台</a></td>
+                        <td th:text="${project.publishTime}">2020-06-09</td>
+                        <td th:text="${project.evolve}">融资</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="demo2" style="margin-left: 210px"></div>
+            </div>
         </div>
+        <script th:inline="javascript">
+            var key=/*[[${pageParam.key}]]*/"";
+            var field=/*[[${pageParam.field}]]*/"";
+            var href="?field="+field+"&key="+key;
+            layui.use(['laypage'], function () {
+                var laypage = layui.laypage;
+                //自定义样式
+                laypage.render({
+                    elem: 'demo2',
+                    theme: '#1E9FFF',
+                    count: /*[[${pageParam.count}]]*/2000,
+                    curr: /*[[${pageParam.curr}]]*/1,
+                    limit: 10,
+                    groups: 10,
+                    jump: function (obj, first) {
+                        //首次不执行
+                        if (!first) {
+                            location.href =href+"&pageIdx=" + obj.curr;
+                        }
+                    }
+                });
+            });
+            $("#fieldbtns button").click(function () {
+                field=$(this).attr("id");
+                href="?field="+field+"&key="+$("#key").val();
+                location.href =href;
+            });
+            $("#search").click(function () {
+                href="?field="+field+"&key="+$("#key").val();
+                location.href =href;
+            });
+            console.log("field:"+field);
+            $("#"+field).css("background","#4295f0");
+
+        </script>
+        <!-------------------------------正文结束-------------------------------------->
+        <div th:replace="indexTemplates/footer"></div>
     </div>
 </div>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="js/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/bootstrap.min.js"></script>
-<script src="layui/layui.all.js"></script>
-<script src="js/page.js"></script>
-<script th:inline="javascript">
-    var key=/*[[${pageParam.key}]]*/"";
-    var field=/*[[${pageParam.field}]]*/"";
-    var href="?field="+field+"&key="+key;
-    layui.use(['laypage'], function () {
-        var laypage = layui.laypage;
-        //自定义样式
-        laypage.render({
-            elem: 'demo2',
-            theme: '#1E9FFF',
-            count: /*[[${pageParam.count}]]*/2000,
-            curr: /*[[${pageParam.curr}]]*/1,
-            limit: 10,
-            groups: 10,
-            jump: function (obj, first) {
-                //首次不执行
-                if (!first) {
-                    location.href =href+"&pageIdx=" + obj.curr;
-                }
-            }
-        });
-    });
-    $("#fieldbtns button").click(function () {
-        field=$(this).attr("id");
-        href="?field="+field+"&key="+$("#key").val();
-        location.href =href;
-    });
-    $("#search").click(function () {
-        href="?field="+field+"&key="+$("#key").val();
-        location.href =href;
-    });
-    console.log("field:"+field);
-    $("#"+field).css("background","#4295f0");
-
-</script>
-<script>
-</script>
 </body>
 </html>

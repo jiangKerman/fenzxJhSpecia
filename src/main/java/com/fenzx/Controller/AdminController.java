@@ -145,7 +145,7 @@ public class AdminController {
     public String adminShowResolvedProblem(ModelMap modelMap) {
         List<Object> problemDetailListObj = problemService.findAllProblemDetailByResolved("2");
         modelMap.put("problemDetailListObj", problemDetailListObj);
-        return "adminShowResolvedProblem";
+        return "admin/adminShowResolvedProblem";
     }
 
     @RequestMapping("adminShowResolvingProblem")

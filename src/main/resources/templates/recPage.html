@@ -1,113 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <title>信息</title>
-    <!-- <div th:replace="indexTemplates/head"></div> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="layui/css/layui.css">
-</head>
+<head th:replace="indexTemplates/head"></head>
+<title>就业创业咨询指导平台</title>
 <body>
-<!--导航栏开始-->
-<div th:replace="indexTemplates/nav"></div>
-<!--导航栏结束-->
-<br>
-<div class="content">
-    <!--二级导航-->
-    <div style="display: inline;float: left;height: 100%;">
-        <ul class="layui-nav layui-nav-tree layui-inline layui-bg-blue" lay-filter="demo"
-            style="margin-right: 10px;">
-            <li class="layui-nav-item"><a href="/infopage?quality=招聘">招聘信息</a></li>
-            <li class="layui-nav-item"><a href="/infopage?quality=实习">实习信息</a></li>
-            <li class="layui-nav-item"><a href="/infopage?quality=宣讲">宣讲会/双选会</a></li>
-            <li class="layui-nav-item"><a href="/entrepInfoPage">创业资讯</a></li>
-            <li class="layui-nav-item"><a href="/entrepPolicyPage">创业政策</a></li>
-        </ul>
-    </div>
-    <!--二级导航结束-->
-    <div style="display: inline;">
-        <form action="/infopage" method="post" id="search">
-            <!--搜索框-->
-            <div style="width:1000px;display: inline;">
-                <input type="hidden" class="form-control" th:value="${pageParam.quality}"
-                       placeholder="性质" name="quality" id="quality">
-                <input style="width: 200px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.postName}"
-                       placeholder="岗位" name="postName" id="postName">
-                <input style="width: 200px;float: left;margin-right: 10px;" type="text" class="form-control"
-                       th:value="${pageParam.employer}" placeholder="用人单位" name="employer" id="employer">
-                <input style="width: 200px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.profess}"
-                       placeholder="专业要求" name="profess" id="profess">
-                <input style="width: 200px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.workSite}"
-                       placeholder="工作地点" name="workSite" id="workSite">
-                <button type="submit" class="btn btn-primary">搜索</button>
+<!-- header-section-starts -->
+<div class="container">
+    <div class="news-paper">
+        <div th:replace="indexTemplates/nav"></div>
+        <!-------------------------------正文开始-------------------------------------->
+        <div th:replace="indexTemplates/secondnav"></div>
+        <!--二级导航结束-->
+        <div style="display: inline;">
+            <form action="/infopage" method="post" id="search">
+                <!--搜索框-->
+                <div style="width:1000px;display: inline;">
+                    <input type="hidden" class="form-control" th:value="${pageParam.quality}"
+                           placeholder="性质" name="quality" id="quality">
+                    <input style="width: 180px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.postName}"
+                           placeholder="岗位" name="postName" id="postName">
+                    <input style="width: 180px;float: left;margin-right: 10px;" type="text" class="form-control"
+                           th:value="${pageParam.employer}" placeholder="用人单位" name="employer" id="employer">
+                    <input style="width: 180px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.profess}"
+                           placeholder="专业要求" name="profess" id="profess">
+                    <input style="width: 180px;float: left;margin-right: 10px;" type="text" class="form-control" th:value="${pageParam.workSite}"
+                           placeholder="工作地点" name="workSite" id="workSite">
+                    <button type="submit" class="btn btn-primary">搜索</button>
+                </div>
+            </form>
+            <!--列表-->
+            <div>
+                <table class="layui-table" lay-skin="line" style="width: 800px;">
+                    <colgroup>
+                        <col width="500px">
+                        <col width="150px">
+                        <col width="200px">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>招聘公告</th>
+                        <th>单位名称</th>
+                        <th>发布时间</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="rec:${recs}">
+                    <tr>
+                        <td><a target="_blank" th:href="@{/recInfo(recid=${rec.id})}" th:text="${rec.title}"></a></td>
+                        <td th:text="${rec.employers}">重庆交通大学</td>
+                        <td th:text="${rec.publishTime}">2020-06-09</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="demo2" style="margin-left: 210px"></div>
             </div>
-        </form>
-        <!--列表-->
-        <div>
-            <table class="layui-table" lay-skin="line" style="width: 900px;">
-                <colgroup>
-                    <col width="600px">
-                    <col width="200px">
-                    <col width="200px">
-                    <col>
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>招聘公告</th>
-                    <th>单位名称</th>
-                    <th>发布时间</th>
-                </tr>
-                </thead>
-                <tbody th:each="rec:${recs}">
-                <tr>
-                    <td><a target="_blank" th:href="@{/recInfo(recid=${rec.id})}" th:text="${rec.title}"></a></td>
-                    <td th:text="${rec.employers}">重庆交通大学</td>
-                    <td th:text="${rec.publishTime}">2020-06-09</td>
-                </tr>
-                </tbody>
-            </table>
-            <div id="demo2" style="margin-left: 210px"></div>
         </div>
+        <script th:inline="javascript">
+            var employer=/*[[${pageParam.employer}]]*/"";
+            var workSite=/*[[${pageParam.workSite}]]*/"";
+            var profess=/*[[${pageParam.profess}]]*/"";
+            var postName=/*[[${pageParam.postName}]]*/"";
+            var quality=/*[[${pageParam.quality}]]*/"";
+            var href="?quality="+quality+"&employer="+employer+"&workSite="+workSite+"&profess="+profess+"&postName="+postName;
+            layui.use(['laypage'], function () {
+                var laypage = layui.laypage;
+                //自定义样式
+                laypage.render({
+                    elem: 'demo2',
+                    theme: '#1E9FFF',
+                    count: /*[[${pageParam.count}]]*/2000,
+                    curr: /*[[${pageParam.curr}]]*/1,
+                    limit: 10,
+                    groups: 10,
+                    jump: function (obj, first) {
+                        //首次不执行
+                        if (!first) {
+                            location.href =href+"&pageIdx=" + obj.curr;
+                        }
+                    }
+                });
+            });
+        </script>
+        <!-------------------------------正文结束-------------------------------------->
+        <div th:replace="indexTemplates/footer"></div>
     </div>
 </div>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="js/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/bootstrap.min.js"></script>
-<script src="layui/layui.all.js"></script>
-<script src="js/page.js"></script>
-<script th:inline="javascript">
-    var employer=/*[[${pageParam.employer}]]*/"";
-    var workSite=/*[[${pageParam.workSite}]]*/"";
-    var profess=/*[[${pageParam.profess}]]*/"";
-    var postName=/*[[${pageParam.postName}]]*/"";
-    var quality=/*[[${pageParam.quality}]]*/"";
-    var href="?quality="+quality+"&employer="+employer+"&workSite="+workSite+"&profess="+profess+"&postName="+postName;
-    layui.use(['laypage'], function () {
-        var laypage = layui.laypage;
-        //自定义样式
-        laypage.render({
-            elem: 'demo2',
-            theme: '#1E9FFF',
-            count: /*[[${pageParam.count}]]*/2000,
-            curr: /*[[${pageParam.curr}]]*/1,
-            limit: 10,
-            groups: 10,
-            jump: function (obj, first) {
-                //首次不执行
-                if (!first) {
-                    location.href =href+"&pageIdx=" + obj.curr;
-                }
-            }
-        });
-    });
-</script>
-<script>
-</script>
 </body>
-
 </html>

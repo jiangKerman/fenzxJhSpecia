@@ -1,7 +1,7 @@
 <!--        左侧功能栏，显示可进行的操作-->
 <div id="sidebar" class="col-3 col-lg-2 text-center border p-0 float-left " th:fragment="teacherMenu"
      xmlns:th="http://www.thymeleaf.org">
-    <img width="100%" src="https://i.loli.net/2020/04/17/fqKuJicTV4SM7Gk.png"
+    <img width="100%" src="http://202.202.240.234/assets/user-c9bd28cb2596c5fa4054092fdbdf089d58dbfcc6bbdfb5d49343dfd26b21bb3c.jpg"
          class="img-fluid" alt="Responsive image">
     <p th:text="${session.student.name}">学生姓名</p>
     <p th:text="${session.student.tel}">13333333333</p>
@@ -22,6 +22,9 @@
         <!--        </tr>-->
         <tr>
             <td><a href="/StudentViewQuestions">我的问题</a></td>
+        </tr>
+        <tr>
+            <td><a href="/stuhome">就业创业管理</a></td>
         </tr>
         <tr>
             <td><a href="/recommendContent">向你推荐<span class="badge badge-danger ml-2" >4</span></a></td>

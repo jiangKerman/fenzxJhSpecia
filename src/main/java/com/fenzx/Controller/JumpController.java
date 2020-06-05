@@ -67,7 +67,7 @@ public class JumpController {
         session.removeAttribute("teacher");
         session.removeAttribute("admin");
         session.removeAttribute("student");
-        return "login";
+        return "redirect:login";
     }
 
     @RequestMapping("admin.html")

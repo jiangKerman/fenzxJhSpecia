@@ -1,106 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>就业信息</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="layui/css/layui.css">
-</head>
+<head th:replace="indexTemplates/head"></head>
+<title>就业详情</title>
 <body>
-<!--导航栏-->
- <div th:replace="indexTemplates/nav"></div>
-<br>
-<div class="detl-content">
-    <h2 th:text="${rec.title}">重庆交通大学招聘</h2>
-    <label th:text="${rec.employers}" style="margin-right: 10px">xxx公司</label><button id="colecbtn" type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-    <table class="table">
-        <tbody>
-        <tr>
-            <td>发布时间：<span th:text="${rec.publishTime}">2014-03-02 20:12</span></td>
-            <td>数据来源：<a target="_blank" th:href="@{${rec.deliveryLink}}" style="color: blue" th:text="${rec.dataSource}">重庆交通大学</a></td>
-        </tr>
-        <tr>
-            <td>联系方式：<span th:text="${rec.tel}">13340865643</span></td>
-            <td>单位网址：<a target="_blank" th:text="${rec.unitSite}" th:href="${rec.unitSite}" style="color: blue">重庆交通大学</a></td>
-        </tr>
-        <tr>
-            <td>工作地点：<span th:text="${rec.workSite}">重庆</span></td>
-            <td>简历申请邮箱：<span th:text="${rec.email}"></span></td>
-        </tr>
-        <tr id="preachtr" style="display: none">
-            <td>宣讲时间：<span th:text="${rec.preachTime}">13340865643</span></td>
-            <td>宣讲地址：<span th:text="${rec.preachSite}">第一教学楼</span></td>
-        </tr>
-        </tbody>
-    </table>
-    <hr>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>岗位名称</th>
-            <th>学历要求</th>
-            <th>需求专业</th>
-            <th>需求人数</th>
-            <th>薪资</th>
-        </tr>
-        </thead>
-        <tbody th:each="hiring:${hiringList}">
-        <tr>
-            <td th:text="${hiring.postName}">算法工程师</td>
-            <td th:text="${hiring.education}">本科</td>
-            <td th:text="${hiring.profesRequire}">计算机</td>
-            <td th:text="${hiring.numberPost}">50</td>
-            <td th:text="${hiring.salary}">1000</td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <span>详情</span>
-    <hr>
-    <div id="detail">
-
-    </div>
-</div>
-<script src="layui/layui.all.js"></script>
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="js/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/bootstrap.min.js"></script>
-<script th:inline="javascript">
-    var detail=/*[[${rec.detail}]]*/2000;
-    var id=/*[[${rec.id}]]*/2000
-    document.getElementById("detail").innerHTML=detail;
-    var quality=/*[[${rec.quality}]]*/"招聘";
-    if(quality=="宣讲"){
-        $("#preachtr").show();
-    }
-    var isCollect=/*[[${isCollect}]]*/"0";
-    console.log(isCollect);
-    if(isCollect=="1"){
-        $("#colecbtn").css("background","yellow");
-    }
-    $("#colecbtn").click(function(){
-        if(isCollect=="0"){
-            $.ajax({
-                url: "/collectRec?recid="+id,
-                success: function (msg) {
-                    console.log(msg);
-                    if(msg!=200){
-                        alert(msg);
-                    }else{
-                        $("#colecbtn").css("background","yellow");
-                        alert("收藏成功");
-                    }
+<!-- header-section-starts -->
+<div class="container">
+    <div class="news-paper">
+        <div th:replace="indexTemplates/nav"></div>
+        <!-------------------------------正文开始-------------------------------------->
+        <h2 th:text="${rec.title}">重庆交通大学招聘</h2>
+        <label th:text="${rec.employers}" style="margin-right: 10px">xxx公司</label><button id="colecbtn" type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>发布时间：<span th:text="${rec.publishTime}">2014-03-02 20:12</span></td>
+                <td>数据来源：<a target="_blank" th:href="@{${rec.deliveryLink}}" style="color: blue" th:text="${rec.dataSource}">重庆交通大学</a></td>
+            </tr>
+            <tr>
+                <td>联系方式：<span th:text="${rec.tel}">13340865643</span></td>
+                <td>单位网址：<a target="_blank" th:text="${rec.unitSite}" th:href="${rec.unitSite}" style="color: blue">重庆交通大学</a></td>
+            </tr>
+            <tr>
+                <td>工作地点：<span th:text="${rec.workSite}">重庆</span></td>
+                <td>简历申请邮箱：<span th:text="${rec.email}"></span></td>
+            </tr>
+            <tr id="preachtr" style="display: none">
+                <td>宣讲时间：<span th:text="${rec.preachTime}">13340865643</span></td>
+                <td>宣讲地址：<span th:text="${rec.preachSite}">第一教学楼</span></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>岗位名称</th>
+                <th>学历要求</th>
+                <th>需求专业</th>
+                <th>需求人数</th>
+                <th>薪资</th>
+            </tr>
+            </thead>
+            <tbody th:each="hiring:${hiringList}">
+            <tr>
+                <td th:text="${hiring.postName}">算法工程师</td>
+                <td th:text="${hiring.education}">本科</td>
+                <td th:text="${hiring.profesRequire}">计算机</td>
+                <td th:text="${hiring.numberPost}">50</td>
+                <td th:text="${hiring.salary}">1000</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <span>详情</span>
+        <hr>
+        <div id="detail">
+        </div>
+        <div th:replace="indexTemplates/logincard"></div>
+        <script th:inline="javascript">
+            var detail=/*[[${rec.detail}]]*/2000;
+            var id=/*[[${rec.id}]]*/2000
+            document.getElementById("detail").innerHTML=detail;
+            var quality=/*[[${rec.quality}]]*/"招聘";
+            if(quality=="宣讲"){
+                $("#preachtr").show();
+            }
+            var isCollect=/*[[${isCollect}]]*/"0";
+            console.log(isCollect);
+            if(isCollect=="1"){
+                $("#colecbtn").css("background","yellow");
+            }
+            $("#colecbtn").click(function(){
+                if(isCollect=="0"){
+                    $.ajax({
+                        url: "/collectRec?recid="+id,
+                        success: function (msg) {
+                            console.log(msg);
+                            if(msg!=200){
+                                show();
+                            }else{
+                                $("#colecbtn").css("background","yellow");
+                                // isCollect=1;
+                            }
+                        }
+                    });
+                }else if(isCollect=="1"){
+                    alert("已收藏");
                 }
             });
-        }else if(isCollect=="1"){
-            alert("已收藏");
-        }
-    });
-</script>
+        </script>
+        <!-------------------------------正文结束-------------------------------------->
+        <div th:replace="indexTemplates/footer"></div>
+    </div>
+</div>
 </body>
-
 </html>
